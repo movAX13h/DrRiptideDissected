@@ -1,0 +1,69 @@
+Explore the underwater caverns in 
+search of Dr. Riptide's undersea lab.
+
+Keys/Buttons used:
+        
+        Arrow keys for direction.
+
+        Space bar or button 1 to 
+        fire.
+
+        Ctrl, Alt, or button 2 to 
+        enter caves or to control
+        JASON sub.
+
+        ESC for options.
+
+        F10 for quick exit to DOS.
+
+
+Your ability can be enhanced by 
+collecting Power-Ups.  Here is a
+summary of a few of the Power-Ups
+available:
+
+         Shield Power-Up adds to 
+         your shield but decreases
+         fire power.
+
+         Auto fire Power-Up makes
+         your guns fire rapidly.
+
+         Fire Power-Up gives you
+         more powerful missiles.
+
+         JASON submersible follows
+         player.
+
+
+To enter the JASON submersible, use
+Ctrl, Alt or button 2 of the joystick.
+JASON can shoot small projectiles and 
+collect coins only.  The small size 
+of JASON will be very useful in some 
+situations!
+
+Scores for goodies are doubled if
+you get them while they are still in
+motion.
+
+Bonus points are awarded at the end
+of the round for remaining air and
+shield.
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Dr. Riptide awaits your arrival!  
+
+      Good Luck, S.N.A.T. 1138...
+

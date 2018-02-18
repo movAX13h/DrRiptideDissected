@@ -1,2 +1,2 @@
-# DrRiptideDissected
-Dr.Riptide - DOS game reverse engineered, tools
+# Dr. Riptide Dissected
+DOS game reverse engineered
