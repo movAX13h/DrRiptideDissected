@@ -1,0 +1,75 @@
+ Answers to commonly asked questions:
+
+      >>  Game play problems  <<
+
+
+Q.  Sometimes the JASON sub goes out
+    of control and does not follow me.
+
+A.  If the main sub is hit, JASON may 
+    malfunction.
+
+
+Q.  How can I turn the sound off while
+    playing the game?
+
+A.  You can always press ESC to get
+    the options screen.
+
+
+Q.  Sometimes I want to enter a cave
+    but the game does not let me.
+
+A.  Only a handful of caves can be
+    entered.  Many are inhabited with
+    large creatures!
+
+
+
+Q.  How do I use the Pulse Cannon?
+
+A.  First you must find all the pieces
+    to assemble the cannon.  Once you
+    have done that, you get 50 shots 
+    of incredible fire power!
+
+
+
+
+Q.  The game does not speed up when I 
+    put game speed on 'FAST'.
+
+A.  On older machines the game can
+    only speed up so much.  This
+    game is recommended for 386-33
+    or faster.
+
+
+
+Tip: If you are finding a level too
+     hard to complete, try setting the
+     game speed to 'SLOW'.
+
+
+
+
+
+
+       >>  Technical problems  <<
+
+
+Q.  I have a mouse but the cursor does
+    not respond to it.
+
+A.  Make sure your mouse driver is
+    loaded before starting Riptide.
+
+
+Q.  When I use the arrow keys that are
+    not on the number pad, I can't 
+    always control the sub.
+
+A.  This is a hardware bug with some
+    MSDOS PCs.  Try to use the arrow
+    keys on the number pad.
+

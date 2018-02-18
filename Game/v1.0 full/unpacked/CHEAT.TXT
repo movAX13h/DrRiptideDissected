@@ -1,0 +1,69 @@
+-------------------------------------------------------------------------------
+                           IN SEARCH OF DR. RIPTIDE
+                              R E G I S T E R E D
+-------------------------------------------------------------------------------
+                             C H E A T   C O D E S
+                              ---------------------  
+        
+                1)  Go to the menu bar by pressing [ESC] at any
+                    time during the game.                        
+                    The menu bar appears automatically on the 
+                    on the title screen.
+
+                2)  Select "Password" in the "Game" menu.
+                
+                3)  Enter the password "LETSRIP!" and press [ENTER].
+
+                4)  A message box will appear with the message
+                    "CHEAT MODE ON., Let's Rip!"
+
+                5)  The cheat mode is now activated.  Begin a game
+                    by starting a new game or entering a password.
+
+                6)  During a game the following keys are active as
+                    cheat keys:
+
+                        A   =   Adds to air supply
+                        S   =   Adds to shields
+                        J   =   JASON probe 
+                        H   =   JASON fire  (JASON shoots when you do)
+                        R   =   Rapid fire  (Auto-fire)
+                        F   =   Full fire   (largest projectile)
+                        U   =   Top fire    (Upward shooting)
+                        G   =   God mode    (Indestructibility)
+
+                    Press any of the above keys to activate each cheat.
+                    
+-------------------------------------------------------------------------------                                
+                                P A S S W O R D S    
+                              ---------------------  
+
+                The following is a list of passwords and their 
+                corresponding level.
+
+                Episode:        Password:           Level Name: 
+                -----------------------------------------------
+		    1		1		Shallow Sea
+		    1           UR2GD		Micro Menace
+		    1		URGR8		Tulip Tango
+		    1		4GOOD		Red Tide
+		    1           2MUCH4U         Fathom's of Teeth
+		    1		ACE		Think Tank
+                    1           BS1             Oscar's Lair
+                    1           SEC1            Outpost Enigma
+		    2           DNUNDR          Atlantis
+		    2           OUT2GTU         Aqua Tremendom
+		    2           AIC             Spawning Waters
+		    2           HANG10          JASON Quest
+		    2           RUN4IT          Frantic Attack
+		    2           BS2             Enter Otis
+		    2           SEC2            ??????
+                    3           GETIT           Sea Escape
+                    3           URINDE          Deep Enigma
+                    3           SOS             Sink or Swim
+                    3           RUN2ME          Marathon
+                    3           512TR           Lab Rynth
+                    3           2B4UDY          Abyss of Peril
+                    3           HOH             Halls of Hell
+                    3           RIP             Mysterious Maze
+                    3           BS3             Confrontation

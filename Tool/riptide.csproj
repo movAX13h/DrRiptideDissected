@@ -7,7 +7,7 @@
     <ProjectGuid>{A21FD3FE-BC67-44C2-AD86-F29AA7C75BAA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>riptide</RootNamespace>
-    <AssemblyName>riptide</AssemblyName>
+    <AssemblyName>RiptideDissected</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

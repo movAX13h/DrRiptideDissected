@@ -1,23 +1,23 @@
-﻿using Gif.Components;
-using riptide.Controls;
-using riptide.Riptide;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using riptide.Controls;
+using riptide.Riptide;
 
 namespace riptide
 {
     public partial class Form1 : Form
     {
         private Game game;
+        private Bitmap canvas;
 
         private Bitmap currentBitmap = null;
         private Sprite currentSprite = null;
         private Map currentMap = null;
         private int currentSpriteFrame = 0;
         private int currentZoom = 3;
-        private Bitmap canvas;
+
         private TilesForm tilesForm;
 
         public Form1()
@@ -131,6 +131,7 @@ namespace riptide
                 statusLabel.Text = $"Loaded {game.Archive.Files.Count} items";
                 statusDetailsLabel.Text = "Select an item to show details.";
                 saveGifsButton.Enabled = game.Archive.Files.Count > 0;
+                saveAllButton.Enabled = saveGifsButton.Enabled;
             }
             else
             {
@@ -179,6 +180,7 @@ namespace riptide
                 gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
+                // map tiles
                 for (y = 0; y < currentMap.Height; y++)
                 {
                     for (x = 0; x < currentMap.Width; x++)
@@ -191,9 +193,24 @@ namespace riptide
                         int gy = y * cellSize;
 
                         gfx.DrawImage(tile.Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
+
+                        
+                        if (cell.EntityID > 0)
+                        {
+                            gfx.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 255, 0)), new Rectangle(gx, gy, cellSize, cellSize));
+                            gfx.DrawString(cell.EntityID.ToString(), SystemFonts.CaptionFont, Brushes.White, gx, gy);
+                        }
+
+                        if (cell.SolidEntityID > 0)
+                        {
+                            //gfx.DrawImage(currentMap.Tiles[cell.SolidEntityID].Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
+                            gfx.FillPie(new SolidBrush(Color.FromArgb(150, 255, 105, 180)), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
+                            gfx.DrawString(cell.SolidEntityID.ToString(), SystemFonts.CaptionFont, Brushes.White, gx, gy);
+                        }
                     }
                 }
 
+                // draw grid on top
                 Pen gridPen = new Pen(Color.FromArgb(50, 0, 0, 0));
 
                 for (x = 0; x <= currentMap.Width; x++)
@@ -314,6 +331,20 @@ namespace riptide
             }
         }
 
+        private void saveAllButton_Click(object sender, EventArgs e)
+        {
+            if (!Directory.Exists("unpacked")) Directory.CreateDirectory("unpacked");
+            int num = 0;
+
+            foreach (DatFileEntry file in game.Archive.Files)
+            {
+                File.WriteAllBytes("unpacked/" + file.Filename, file.Data);
+                num++;
+            }
+
+            MessageBox.Show($"{num} files written.", "archive unpacked", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private void gifButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -367,8 +398,7 @@ namespace riptide
 
             tilesForm = new TilesForm(currentMap);
             tilesForm.Show(this);
-
-
         }
+
     }
 }

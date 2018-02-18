@@ -62,6 +62,7 @@
             this.zoom1xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGifsButton = new System.Windows.Forms.Button();
             this.detailsTextBox = new System.Windows.Forms.TextBox();
+            this.saveAllButton = new System.Windows.Forms.Button();
             this.selectionPanel.SuspendLayout();
             this.frameSelectionPanel.SuspendLayout();
             this.canvasPanel.SuspendLayout();
@@ -73,7 +74,7 @@
             // 
             this.startButton.Location = new System.Drawing.Point(12, 12);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(245, 37);
+            this.startButton.Size = new System.Drawing.Size(157, 37);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "LOAD GAME";
             this.startButton.UseVisualStyleBackColor = true;
@@ -372,6 +373,7 @@
             // 
             // detailsTextBox
             // 
+            this.detailsTextBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detailsTextBox.Location = new System.Drawing.Point(5, 43);
             this.detailsTextBox.Multiline = true;
             this.detailsTextBox.Name = "detailsTextBox";
@@ -381,11 +383,23 @@
             this.detailsTextBox.TabIndex = 5;
             this.detailsTextBox.Visible = false;
             // 
+            // saveAllButton
+            // 
+            this.saveAllButton.Enabled = false;
+            this.saveAllButton.Location = new System.Drawing.Point(175, 12);
+            this.saveAllButton.Name = "saveAllButton";
+            this.saveAllButton.Size = new System.Drawing.Size(83, 37);
+            this.saveAllButton.TabIndex = 6;
+            this.saveAllButton.Text = "SAVE ALL";
+            this.saveAllButton.UseVisualStyleBackColor = true;
+            this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(995, 514);
+            this.Controls.Add(this.saveAllButton);
             this.Controls.Add(this.saveGifsButton);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.selectionPanel);
@@ -443,6 +457,7 @@
         private System.Windows.Forms.Button saveGifsButton;
         private System.Windows.Forms.Button tilesButton;
         private System.Windows.Forms.TextBox detailsTextBox;
+        private System.Windows.Forms.Button saveAllButton;
     }
 }
 
