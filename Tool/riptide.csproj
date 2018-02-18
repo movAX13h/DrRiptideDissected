@@ -60,8 +60,16 @@
     <Compile Include="Riptide\DatFile.cs" />
     <Compile Include="Riptide\Game.cs" />
     <Compile Include="Riptide\Map.cs" />
+    <Compile Include="Riptide\MapCell.cs" />
     <Compile Include="Riptide\PcxFile.cs" />
     <Compile Include="Riptide\Sprite.cs" />
+    <Compile Include="Riptide\MapTile.cs" />
+    <Compile Include="TilesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TilesForm.Designer.cs">
+      <DependentUpon>TilesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\AnimatedGifEncoder.cs" />
     <Compile Include="Utils\LZWEncoder.cs" />
     <Compile Include="Utils\NeuQuant.cs" />
@@ -78,6 +86,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TilesForm.resx">
+      <DependentUpon>TilesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -17,11 +17,14 @@ namespace riptide
         private Map currentMap = null;
         private int currentSpriteFrame = 0;
         private int currentZoom = 3;
+        private Bitmap canvas;
+        private TilesForm tilesForm;
 
         public Form1()
         {
             InitializeComponent();
 
+            tilesButton.Left = pngButton.Left;
             statusLabel.Text = "";
             statusDetailsLabel.Text = "";
             datFileList.ListViewItemSorter = new ListViewColumnSorter();
@@ -36,10 +39,12 @@ namespace riptide
             currentSprite = null;
             currentMap = null;
             canvasPanel.Visible = false;
+            detailsTextBox.Visible = false;
 
             pngButton.Visible = false;
-
+            tilesButton.Visible = false;
             frameSelectionPanel.Visible = false;
+
             currentSpriteFrame = 0;
 
             if (entry == null) return;
@@ -98,14 +103,20 @@ namespace riptide
                     }
 
                     statusDetailsLabel.Text = $"Size: {currentMap.Width}x{currentMap.Height}";
+                    tilesButton.Visible = true;
                     canvasPanel.Visible = true;
+                    break;
+
+                case DatFileEntry.DataType.Text:
+                    detailsTextBox.Text = entry.GetText();
+                    detailsTextBox.Visible = true;
                     break;
             }
 
             draw();
         }
 
-        private void startButton_Click(object sender, EventArgs e)
+        private void start()
         {
             if (game.Load())
             {
@@ -127,39 +138,6 @@ namespace riptide
                 statusLabel.Text = "Failed to load game data!";
             }
         }
-
-        #region dat files list
-        private void datFileList_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            ListViewColumnSorter sorter = datFileList.ListViewItemSorter as ListViewColumnSorter;
-
-            if (e.Column == sorter.SortColumn)
-            {
-                if (sorter.Order == SortOrder.Ascending)
-                {
-                    sorter.Order = SortOrder.Descending;
-                }
-                else
-                {
-                    sorter.Order = SortOrder.Ascending;
-                }
-            }
-            else
-            {
-                sorter.SortColumn = e.Column;
-                sorter.Order = SortOrder.Ascending;
-            }
-
-            datFileList.Sort();
-        }
-
-        private void datFileList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            showFileDetails(datFileList.SelectedItems.Count == 0 ? null : ((FileListItem)datFileList.SelectedItems[0]).Entry);
-        }
-        #endregion
-
-        Bitmap canvas;
 
         private void draw()
         {
@@ -191,24 +169,40 @@ namespace riptide
             }
             else if (currentMap != null)
             {
-                Pen gridPen = Pens.Gray;
-                int cellSize = 16;
+                int cellSize = 8 * currentZoom;
 
                 w = currentMap.Width * cellSize;
                 h = currentMap.Height * cellSize;
 
-                canvas = new Bitmap(w + 1, h + 1);
+                canvas = new Bitmap(w, h);
                 gfx = Graphics.FromImage(canvas);
                 gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
-                for (x = 0; x < currentMap.Width; x++)
+                for (y = 0; y < currentMap.Height; y++)
+                {
+                    for (x = 0; x < currentMap.Width; x++)
+                    {
+                        int i = x + y * currentMap.Width;
+                        MapCell cell = currentMap.Cells[i];
+                        MapTile tile = currentMap.Tiles[cell.TileID];
+
+                        int gx = x * cellSize;
+                        int gy = y * cellSize;
+
+                        gfx.DrawImage(tile.Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
+                    }
+                }
+
+                Pen gridPen = new Pen(Color.FromArgb(50, 0, 0, 0));
+
+                for (x = 0; x <= currentMap.Width; x++)
                 {
                     int gx = x * cellSize + 1;
                     gfx.DrawLine(gridPen, gx, 0, gx, h);
                 }
 
-                for (y = 0; y < currentMap.Height; y++)
+                for (y = 0; y <= currentMap.Height; y++)
                 {
                     int gy = y * cellSize + 1;
                     gfx.DrawLine(gridPen, 0, gy, w, gy);
@@ -218,55 +212,7 @@ namespace riptide
             canvasBox.Image = canvas;
             if (gfx != null) gfx.Dispose();
         }
-
-        /*
-        private void canvasPanel_Paint(object sender, PaintEventArgs e)
-        {
-            //e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-
-            int x, y, w, h;
-
-            if (currentBitmap != null)
-            {
-                x = 1;
-                y = 1;
-                w = currentBitmap.Width * currentZoom;
-                h = currentBitmap.Height * currentZoom;
-
-                if (canvasPanel.Width > w) x = (int)Math.Ceiling((canvasPanel.Width - w) / 2f);
-                if (canvasPanel.Height > h) y = (int)Math.Ceiling((canvasPanel.Height - h) / 2f);
-
-                e.Graphics.DrawImage(currentBitmap, 
-                    new Rectangle(x, y, w, h), 
-                    new Rectangle(0, 0, currentBitmap.Width, currentBitmap.Height), 
-                    GraphicsUnit.Pixel);
-            }
-
-            if (currentMap != null)
-            {
-                Pen gridPen = Pens.Gray;
-                int cellSize = 2;
-
-                int gw = currentMap.Width * cellSize;
-                int gh = currentMap.Height * cellSize;
-
-                for (x = 0; x < currentMap.Width; x++)
-                {
-                    int gx = x * cellSize;
-                    e.Graphics.DrawLine(gridPen, gx, 0, gx, gh);
-                }
-
-                for (y = 0; y < currentMap.Height; y++)
-                {
-                    int gy = y * cellSize;
-                    e.Graphics.DrawLine(gridPen, 0, gy, gw, gy);
-                }
-            }
-        }
-        */
-        
+                
         private void prevFrame()
         {
             if (currentSprite.Frames.Length == 1) return;
@@ -295,6 +241,42 @@ namespace riptide
             statusDetailsLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
         }
 
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            start();
+        }
+        
+        #region dat files list
+        private void datFileList_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ListViewColumnSorter sorter = datFileList.ListViewItemSorter as ListViewColumnSorter;
+
+            if (e.Column == sorter.SortColumn)
+            {
+                if (sorter.Order == SortOrder.Ascending)
+                {
+                    sorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    sorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                sorter.SortColumn = e.Column;
+                sorter.Order = SortOrder.Ascending;
+            }
+
+            datFileList.Sort();
+        }
+
+        private void datFileList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            showFileDetails(datFileList.SelectedItems.Count == 0 ? null : ((FileListItem)datFileList.SelectedItems[0]).Entry);
+        }
+        #endregion
+
         private void zoomDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             currentZoom = 10 - zoomDropDown.DropDownItems.IndexOf(e.ClickedItem);
@@ -318,11 +300,6 @@ namespace riptide
 
             if (e.KeyCode == Keys.Left) prevFrame();
             if (e.KeyCode == Keys.Right) nextFrame();
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            //if (canvasPanel.Visible) canvasPanel.Invalidate();
         }
 
         private void pngButton_Click(object sender, EventArgs e)
@@ -382,6 +359,16 @@ namespace riptide
             }
 
             MessageBox.Show($"{num} GIFs written.\n{failed} failed.", "GIF export", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void tilesButton_Click(object sender, EventArgs e)
+        {
+            if (currentMap == null) return;
+
+            tilesForm = new TilesForm(currentMap);
+            tilesForm.Show(this);
+
+
         }
     }
 }

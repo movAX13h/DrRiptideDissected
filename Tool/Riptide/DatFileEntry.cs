@@ -99,6 +99,14 @@ namespace riptide.Riptide
             return cachedMap;
         }
 
+        public string GetText()
+        {
+            if (Type != DataType.Text) return "";
+            if (Data == null || Data.Length == 0) return null;
+
+            return System.Text.Encoding.Default.GetString(Data);
+        }
+
         public override string ToString()
         {
             return Filename + " @ " + Offset.ToString();

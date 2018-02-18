@@ -46,7 +46,7 @@ namespace riptide.Riptide
             try
             {
                 PcxFile pcx = framePcx.GetPicture();
-                MainPalette = pcx.Palette;
+                MainPalette = (Color[])pcx.Palette.Clone();
                 MainPalette[0] = Color.Transparent;
             }
             catch(Exception e)
