@@ -147,9 +147,11 @@ namespace riptide
                 canvas.Dispose();
                 canvas = null;
             }
-            
-            int x, y, w, h;
+
+            int x, y, w, h, gx, gy, i;
             Graphics gfx = null;
+
+            Font font = new Font(SystemFonts.DefaultFont.FontFamily, 9, FontStyle.Regular);
 
             if (currentBitmap != null)
             {
@@ -185,29 +187,40 @@ namespace riptide
                 {
                     for (x = 0; x < currentMap.Width; x++)
                     {
-                        int i = x + y * currentMap.Width;
+                        i = x + y * currentMap.Width;
                         MapCell cell = currentMap.Cells[i];
                         MapTile tile = currentMap.Tiles[cell.TileID];
 
-                        int gx = x * cellSize;
-                        int gy = y * cellSize;
+                        gx = x * cellSize;
+                        gy = y * cellSize;
 
                         gfx.DrawImage(tile.Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
-
                         
                         if (cell.EntityID > 0)
                         {
                             gfx.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 255, 0)), new Rectangle(gx, gy, cellSize, cellSize));
-                            gfx.DrawString(cell.EntityID.ToString(), SystemFonts.CaptionFont, Brushes.White, gx, gy);
+                            gfx.DrawString(cell.EntityID.ToString(), font, Brushes.White, gx, gy);
                         }
 
                         if (cell.SolidEntityID > 0)
                         {
                             //gfx.DrawImage(currentMap.Tiles[cell.SolidEntityID].Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
                             gfx.FillPie(new SolidBrush(Color.FromArgb(150, 255, 105, 180)), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
-                            gfx.DrawString(cell.SolidEntityID.ToString(), SystemFonts.CaptionFont, Brushes.White, gx, gy);
+                            gfx.DrawString(cell.SolidEntityID.ToString(), font, Brushes.White, gx, gy);
                         }
                     }
+                }
+
+                // positions
+                for (i = 0; i < currentMap.Positions.Length; i++)
+                {
+                    int pos = currentMap.Positions[i];
+                    if (pos == 0) continue;
+
+                    gx = cellSize * (pos % currentMap.Width);
+                    gy = cellSize * (pos / currentMap.Width);
+                    gfx.FillPie(new SolidBrush(Color.FromArgb(255, 255, 255, 0)), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
+                    gfx.DrawString(i.ToString(), font, Brushes.Blue, gx + 2, gy + 2);
                 }
 
                 // draw grid on top
@@ -215,19 +228,20 @@ namespace riptide
 
                 for (x = 0; x <= currentMap.Width; x++)
                 {
-                    int gx = x * cellSize + 1;
+                    gx = x * cellSize + 1;
                     gfx.DrawLine(gridPen, gx, 0, gx, h);
                 }
 
                 for (y = 0; y <= currentMap.Height; y++)
                 {
-                    int gy = y * cellSize + 1;
+                    gy = y * cellSize + 1;
                     gfx.DrawLine(gridPen, 0, gy, w, gy);
                 }
             }
 
             canvasBox.Image = canvas;
             if (gfx != null) gfx.Dispose();
+            font.Dispose();
         }
                 
         private void prevFrame()

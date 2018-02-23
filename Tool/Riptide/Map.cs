@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace riptide.Riptide
@@ -14,6 +15,10 @@ namespace riptide.Riptide
         public MapCell[] Cells { get; private set; }
         public MapTile[] Tiles { get; private set; }
         public Color[] Palette { get; private set; }
+        public int[] Positions { get; private set; }
+
+        public int PlayerSpawn = 0;
+
 
         public Map(DatFileEntry entry)
         {
@@ -54,7 +59,22 @@ namespace riptide.Riptide
                 i += 64;
             }
 
+            loadPositions();
+
             Ready = true;
+        }
+
+        private void loadPositions()
+        {
+            Positions = new int[52];
+            int num = 0;
+
+            for (int i = Entry.Data.Length - 104; i < Entry.Data.Length; i += 2)
+            {
+                int pos = Entry.Data[i] + Entry.Data[i + 1] * 256;
+                if (pos != 0) Positions[num] = pos;
+                num++;
+            }
         }
 
         private void loadPalette()
