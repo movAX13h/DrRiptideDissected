@@ -53,7 +53,7 @@ namespace riptide.Riptide
 
             encoder.SetTransparent(Color.Black);
             encoder.SetDelay(100);
-            encoder.SetRepeat(0); //-1:no repeat,0:always repeat
+            encoder.SetRepeat(0); // -1:no repeat, 0:always repeat
 
             foreach (Bitmap bmp in Frames)
             {

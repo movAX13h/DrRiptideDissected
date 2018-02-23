@@ -46,6 +46,7 @@
             this.canvasPanel = new System.Windows.Forms.Panel();
             this.canvasBox = new System.Windows.Forms.PictureBox();
             this.selectionLabel = new System.Windows.Forms.Label();
+            this.detailsTextBox = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusDetailsLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -61,7 +62,6 @@
             this.zoom2xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoom1xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGifsButton = new System.Windows.Forms.Button();
-            this.detailsTextBox = new System.Windows.Forms.TextBox();
             this.saveAllButton = new System.Windows.Forms.Button();
             this.selectionPanel.SuspendLayout();
             this.frameSelectionPanel.SuspendLayout();
@@ -101,6 +101,7 @@
             this.datFileList.View = System.Windows.Forms.View.Details;
             this.datFileList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.datFileList_ColumnClick);
             this.datFileList.SelectedIndexChanged += new System.EventHandler(this.datFileList_SelectedIndexChanged);
+            this.datFileList.DoubleClick += new System.EventHandler(this.datFileList_DoubleClick);
             this.datFileList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.datFileList_KeyDown);
             // 
             // idColumn
@@ -250,6 +251,18 @@
             this.selectionLabel.TabIndex = 0;
             this.selectionLabel.Text = "nothing selected";
             // 
+            // detailsTextBox
+            // 
+            this.detailsTextBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.detailsTextBox.Location = new System.Drawing.Point(5, 43);
+            this.detailsTextBox.Multiline = true;
+            this.detailsTextBox.Name = "detailsTextBox";
+            this.detailsTextBox.ReadOnly = true;
+            this.detailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.detailsTextBox.Size = new System.Drawing.Size(626, 427);
+            this.detailsTextBox.TabIndex = 5;
+            this.detailsTextBox.Visible = false;
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -303,61 +316,61 @@
             // zoom10xToolStripMenuItem
             // 
             this.zoom10xToolStripMenuItem.Name = "zoom10xToolStripMenuItem";
-            this.zoom10xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom10xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom10xToolStripMenuItem.Text = "Zoom 10x";
             // 
             // zoom9xToolStripMenuItem
             // 
             this.zoom9xToolStripMenuItem.Name = "zoom9xToolStripMenuItem";
-            this.zoom9xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom9xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom9xToolStripMenuItem.Text = "Zoom 9x";
             // 
             // zoom8xToolStripMenuItem
             // 
             this.zoom8xToolStripMenuItem.Name = "zoom8xToolStripMenuItem";
-            this.zoom8xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom8xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom8xToolStripMenuItem.Text = "Zoom 8x";
             // 
             // zoom7xToolStripMenuItem
             // 
             this.zoom7xToolStripMenuItem.Name = "zoom7xToolStripMenuItem";
-            this.zoom7xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom7xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom7xToolStripMenuItem.Text = "Zoom 7x";
             // 
             // zoom6xToolStripMenuItem
             // 
             this.zoom6xToolStripMenuItem.Name = "zoom6xToolStripMenuItem";
-            this.zoom6xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom6xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom6xToolStripMenuItem.Text = "Zoom 6x";
             // 
             // zoom5xToolStripMenuItem
             // 
             this.zoom5xToolStripMenuItem.Name = "zoom5xToolStripMenuItem";
-            this.zoom5xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom5xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom5xToolStripMenuItem.Text = "Zoom 5x";
             // 
             // zoom4xToolStripMenuItem
             // 
             this.zoom4xToolStripMenuItem.Name = "zoom4xToolStripMenuItem";
-            this.zoom4xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom4xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom4xToolStripMenuItem.Text = "Zoom 4x";
             // 
             // zoom3xToolStripMenuItem
             // 
             this.zoom3xToolStripMenuItem.Name = "zoom3xToolStripMenuItem";
-            this.zoom3xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom3xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom3xToolStripMenuItem.Text = "Zoom 3x";
             // 
             // zoom2xToolStripMenuItem
             // 
             this.zoom2xToolStripMenuItem.Name = "zoom2xToolStripMenuItem";
-            this.zoom2xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom2xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom2xToolStripMenuItem.Text = "Zoom 2x";
             // 
             // zoom1xToolStripMenuItem
             // 
             this.zoom1xToolStripMenuItem.Name = "zoom1xToolStripMenuItem";
-            this.zoom1xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom1xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom1xToolStripMenuItem.Text = "Zoom 1x";
             // 
             // saveGifsButton
@@ -370,18 +383,6 @@
             this.saveGifsButton.Text = "SAVE GIFS";
             this.saveGifsButton.UseVisualStyleBackColor = true;
             this.saveGifsButton.Click += new System.EventHandler(this.saveGifsButton_Click);
-            // 
-            // detailsTextBox
-            // 
-            this.detailsTextBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.detailsTextBox.Location = new System.Drawing.Point(5, 43);
-            this.detailsTextBox.Multiline = true;
-            this.detailsTextBox.Name = "detailsTextBox";
-            this.detailsTextBox.ReadOnly = true;
-            this.detailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.detailsTextBox.Size = new System.Drawing.Size(626, 427);
-            this.detailsTextBox.TabIndex = 5;
-            this.detailsTextBox.Visible = false;
             // 
             // saveAllButton
             // 

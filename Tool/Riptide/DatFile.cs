@@ -62,7 +62,8 @@ namespace riptide.Riptide
 
                 entry.Filename = ""; // 13 chars, null-terminated
 
-                for (int j = 0; j < 13; j++)
+                int j;
+                for (j = 0; j < 13; j++)
                 {
                     if (data[offset + j] == 0)
                     {
@@ -76,6 +77,39 @@ namespace riptide.Riptide
 
                 Files.Add(entry);
                 Log += entry.ToString() + Environment.NewLine;
+            }
+
+            return true;
+        }
+
+        public bool Save()
+        {
+            try
+            {
+                using (FileStream fsStream = new FileStream(path, FileMode.Create))
+                using (BinaryWriter writer = new BinaryWriter(fsStream))
+                {
+                    writer.Write(Convert.ToInt16(Files.Count));
+                    foreach (DatFileEntry file in Files)
+                    {
+                        writer.Write(Convert.ToInt32(file.Size));
+                        writer.Write(Convert.ToInt32(file.Modified));
+                        writer.Write(Convert.ToInt32(file.Offset));
+
+                        byte[] filename = ASCIIEncoding.ASCII.GetBytes(file.Filename);
+
+                        writer.Write(filename);
+                        for (int i = 0; i < 13 - filename.Length; i++) writer.Write((byte)0);
+                    }
+                    foreach (DatFileEntry file in Files)
+                    {
+                        writer.Write(file.Data);
+                    }
+                }
+            }
+            catch
+            {
+                return false;
             }
 
             return true;

@@ -400,5 +400,13 @@ namespace riptide
             tilesForm.Show(this);
         }
 
+        private void datFileList_DoubleClick(object sender, EventArgs e)
+        {
+            if (datFileList.SelectedItems.Count > 0)
+            {
+                EditForm form = new EditForm(game, ((FileListItem)datFileList.SelectedItems[0]).Entry);
+                form.Show();
+            }
+        }
     }
 }
