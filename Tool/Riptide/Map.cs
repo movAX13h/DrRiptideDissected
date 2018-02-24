@@ -19,6 +19,7 @@ namespace riptide.Riptide
 
         public int PlayerSpawn = 0;
 
+        #region hardcoded strings
         public static string PositionEntryTypeByNumber(int nr, int value)
         {
             switch(nr)
@@ -26,7 +27,7 @@ namespace riptide.Riptide
                 case 0: return "player spawn";
                 case 1: return "level exit";
                 case 2: return "message: \"You need a key for this door.\""; // this message is different from the others below; text is constant, the value is the position
-                case 3: return "green - key gate";
+                case 3: return "key gate";
                 case 4: return "level exit left";
 
                 case 5:
@@ -92,6 +93,48 @@ namespace riptide.Riptide
                 default: return "invalid";
             }
         }
+
+        public struct MapInfo
+        {
+            public string Title;
+            public string Password;
+            public string Music;
+
+        }
+
+        public static MapInfo InfoByFilename(string filename)
+        {
+            switch (filename.ToLower())
+            {
+                case "1-1.m": return new MapInfo { Title = "Shallow Sea", Password = "1", Music = "1.cmf" };
+                case "1-2.m": return new MapInfo { Title = "Micro Menace", Password = "UR2GD", Music = "2.cmf" };
+                case "1-3.m": return new MapInfo { Title = "Tulip Tango", Password = "URGR8", Music = "3.cmf" };
+                case "1-4.m": return new MapInfo { Title = "Red Tide", Password = "4GOOD", Music = "1.cmf" };
+                case "1-5.m": return new MapInfo { Title = "Fathoms of Teeth", Password = "2MUCH4U", Music = "2.cmf" };
+                case "1-6.m": return new MapInfo { Title = "Think Tank", Password = "ACE", Music = "3.cmf" };
+                case "bs1.m": return new MapInfo { Title = "Oscar's Lair", Password = "BS1", Music = "5.cmf" };
+                case "2-1.m": return new MapInfo { Title = "Atlantis", Password = "DNUNDR", Music = "oxygen.cmf" };
+                case "2-2.m": return new MapInfo { Title = "Aqua Tremendom", Password = "OUT2GTU", Music = "4.cmf" };
+                case "2-3.m": return new MapInfo { Title = "Spawning Waters", Password = "AIC", Music = "bossa.cmf" };
+                case "2-4.m": return new MapInfo { Title = "JASON Quest", Password = "HANG10", Music = "1.cmf" };
+                case "2-5.m": return new MapInfo { Title = "Frantic Attack", Password = "RUN4IT", Music = "weerd.cmf" };
+                case "bs2.m": return new MapInfo { Title = "Enter Otis", Password = "BS2", Music = "chaos.cmf" };
+                case "3-1.m": return new MapInfo { Title = "Sea Escape", Password = "GETIT", Music = "1.cmf" };
+                case "3-2.m": return new MapInfo { Title = "Deep Enigma", Password = "URINDE", Music = "oxygen.cmf" };
+                case "3-3.m": return new MapInfo { Title = "Sink or Swim", Password = "SOS", Music = "4.cmf" };
+                case "3-4.m": return new MapInfo { Title = "Marathon", Password = "RUN2ME", Music = "3.cmf" };
+                case "3-5.m": return new MapInfo { Title = "Lab Rynth", Password = "512TR", Music = "chaos.cmf" };
+                case "3-6.m": return new MapInfo { Title = "Abyss of Peril", Password = "2B4UDY", Music = "turn.cmf" };
+                case "3-7.m": return new MapInfo { Title = "Halls of Hell", Password = "HOH", Music = "2.cmf" };
+                case "3-8.m": return new MapInfo { Title = "Mysterious Maze", Password = "RIP", Music = "oxygen.cmf" };
+                case "bs3.m": return new MapInfo { Title = "Confrontation", Password = "BS3", Music = "5.cmf" };
+                case "sec1.m": return new MapInfo { Title = "Outpost Enigma", Password = "SEC1", Music = "4.cmf" };
+                case "sec2.m": return new MapInfo { Title = "??????", Password = "SEC2", Music = "weerd.cmf" };
+            }
+
+            return new MapInfo { Title = "unknown", Password = "", Music = "" };
+        }
+        #endregion
 
         public Map(DatFileEntry entry)
         {

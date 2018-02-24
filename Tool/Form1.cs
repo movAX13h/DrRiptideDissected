@@ -102,7 +102,10 @@ namespace riptide
                         return;
                     }
 
-                    statusDetailsLabel.Text = $"Size: {currentMap.Width}x{currentMap.Height}";
+                    Map.MapInfo info = Map.InfoByFilename(currentMap.Entry.Filename);
+                    selectionLabel.Text += $" - \"{info.Title}\"";
+                    statusDetailsLabel.Text = $"Size: {currentMap.Width}x{currentMap.Height}, Password: \"{info.Password}\", Music: {info.Music}";
+
                     mapButtonsPanel.Visible = true;
                     canvasPanel.Visible = true;
                     break;

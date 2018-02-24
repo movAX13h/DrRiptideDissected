@@ -1,5 +1,0 @@
-@ECHO OFF
-
-del RIPTIDE.DAT
-copy "RIPTIDE - Kopie.DAT" RIPTIDE.DAT
-
