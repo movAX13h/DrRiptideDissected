@@ -24,7 +24,7 @@ namespace riptide
         {
             InitializeComponent();
 
-            tilesButton.Left = pngButton.Left;
+            mapButtonsPanel.Left = pngButton.Right - mapButtonsPanel.Width;
             statusLabel.Text = "";
             statusDetailsLabel.Text = "";
             datFileList.ListViewItemSorter = new ListViewColumnSorter();
@@ -42,7 +42,7 @@ namespace riptide
             detailsTextBox.Visible = false;
 
             pngButton.Visible = false;
-            tilesButton.Visible = false;
+            mapButtonsPanel.Visible = false;
             frameSelectionPanel.Visible = false;
 
             currentSpriteFrame = 0;
@@ -103,7 +103,7 @@ namespace riptide
                     }
 
                     statusDetailsLabel.Text = $"Size: {currentMap.Width}x{currentMap.Height}";
-                    tilesButton.Visible = true;
+                    mapButtonsPanel.Visible = true;
                     canvasPanel.Visible = true;
                     break;
 
@@ -195,17 +195,39 @@ namespace riptide
                         gy = y * cellSize;
 
                         gfx.DrawImage(tile.Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
-                        
+
                         if (cell.EntityID > 0)
                         {
                             gfx.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 255, 0)), new Rectangle(gx, gy, cellSize, cellSize));
-                            gfx.DrawString(cell.EntityID.ToString(), font, Brushes.White, gx, gy);
                         }
 
                         if (cell.SolidEntityID > 0)
                         {
                             //gfx.DrawImage(currentMap.Tiles[cell.SolidEntityID].Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
                             gfx.FillPie(new SolidBrush(Color.FromArgb(150, 255, 105, 180)), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
+                        }
+                    }
+                } 
+                
+                // texts on top
+                for (y = 0; y < currentMap.Height; y++)
+                {
+                    for (x = 0; x < currentMap.Width; x++)
+                    {
+                        i = x + y * currentMap.Width;
+                        MapCell cell = currentMap.Cells[i];
+                        MapTile tile = currentMap.Tiles[cell.TileID];
+
+                        gx = x * cellSize;
+                        gy = y * cellSize;
+
+                        if (cell.EntityID > 0)
+                        {
+                            gfx.DrawString(cell.EntityID.ToString(), font, Brushes.White, gx, gy);
+                        }
+
+                        if (cell.SolidEntityID > 0)
+                        {
                             gfx.DrawString(cell.SolidEntityID.ToString(), font, Brushes.White, gx, gy);
                         }
                     }
@@ -217,10 +239,29 @@ namespace riptide
                     int pos = currentMap.Positions[i];
                     if (pos == 0) continue;
 
+                    string caption = Map.PositionEntryTypeByNumber(i, pos);
+                    if (i >= 30) 
+                    {
+                        if (i % 2 == 1) continue; // don't draw message entries containing text id instead of position (see Map.PositionEntryTypeByNumber)
+                        caption = Map.PositionEntryTypeByNumber(i + 1, currentMap.Positions[i + 1]);
+                    }
+
                     gx = cellSize * (pos % currentMap.Width);
                     gy = cellSize * (pos / currentMap.Width);
-                    gfx.FillPie(new SolidBrush(Color.FromArgb(255, 255, 255, 0)), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
-                    gfx.DrawString(i.ToString(), font, Brushes.Blue, gx + 2, gy + 2);
+                    gfx.FillPie(new SolidBrush(Color.FromArgb(160, 255, 255, 0)), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
+                    
+                    var size = gfx.MeasureString(caption, font);
+                    x = (int)Math.Min(currentMap.Width * cellSize - size.Width, Math.Max(0, gx + cellSize / 2 - size.Width / 2));
+                    gfx.DrawString(caption, font, Brushes.Black, x + 1, gy + 2 + 1);
+                    gfx.DrawString(caption, font, Brushes.White, x    , gy + 2    );
+
+                    // connect teleports with a line
+                    if (i >= 10 && i < 30 && i % 2 == 1)
+                    {
+                        int prevPos = currentMap.Positions[i - 1];
+                        int halfSize = cellSize / 2;
+                        gfx.DrawLine(Pens.Yellow, cellSize * (prevPos % currentMap.Width) + halfSize, cellSize * (prevPos / currentMap.Width) + halfSize, gx + halfSize, gy + halfSize);
+                    }
                 }
 
                 // draw grid on top
@@ -421,6 +462,13 @@ namespace riptide
                 EditForm form = new EditForm(game, ((FileListItem)datFileList.SelectedItems[0]).Entry);
                 form.Show();
             }
+        }
+
+        private void positionsButton_Click(object sender, EventArgs e)
+        {
+            PositionsForm form = new PositionsForm(currentMap);
+            form.Text = "Positions of map " + currentMap.Entry.Filename;
+            form.Show();
         }
     }
 }

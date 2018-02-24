@@ -1,3 +1,4 @@
+sprites loaded by exe in this order (1.1 shareware):
 bubsm.l
 bubmd.l
 subr.l

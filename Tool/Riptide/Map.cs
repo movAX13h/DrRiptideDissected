@@ -19,6 +19,79 @@ namespace riptide.Riptide
 
         public int PlayerSpawn = 0;
 
+        public static string PositionEntryTypeByNumber(int nr, int value)
+        {
+            switch(nr)
+            {
+                case 0: return "player spawn";
+                case 1: return "level exit";
+                case 2: return "message: \"You need a key for this door.\""; // this message is different from the others below; text is constant, the value is the position
+                case 3: return "green - key gate";
+                case 4: return "level exit left";
+
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9: return "unknown";
+
+                case 10: return "teleport 1 IN";
+                case 11: return "teleport 1 OUT";
+                case 12: return "teleport 2 IN";
+                case 13: return "teleport 2 OUT";
+                case 14: return "teleport 3 IN";
+                case 15: return "teleport 3 OUT";
+                case 16: return "teleport 4 IN";
+                case 17: return "teleport 4 OUT";
+                case 18: return "teleport 5 IN";
+                case 19: return "teleport 5 OUT";
+                case 20: return "teleport 6 IN";
+                case 21: return "teleport 6 OUT";
+                case 22: return "teleport 7 IN";
+                case 23: return "teleport 7 OUT";
+                case 24: return "teleport 8 IN";
+                case 25: return "teleport 8 OUT";
+                case 26: return "teleport 9 IN";
+                case 27: return "teleport 9 OUT";
+                case 28: return "teleport 10 IN";
+                case 29: return "teleport 10 OUT";
+
+                case 30: return "message 1 position";
+                case 31: return "message 1: \"" + MessageByID(value) + "\"";
+                case 32: return "message 2 position";
+                case 33: return "message 2: \"" + MessageByID(value) + "\"";
+                case 34: return "message 3 position";
+                case 35: return "message 3: \"" + MessageByID(value) + "\"";
+                case 36: return "message 4 position";
+                case 37: return "message 4: \"" + MessageByID(value) + "\"";
+
+                default: return "unknown";
+            }
+        }
+
+        public static string MessageByID(int id)
+        {
+            switch(id)
+            {
+                case 0: return "You need a key for this door.";
+                case 1: return "You got the key!";
+                case 2: return "Think!";
+                case 3: return "Extra fire power added!";
+                case 4: return "Auto-fire added!";
+                case 5: return "WARNING: Air is low.";
+                case 6: return "Watch out for those piranas!";
+                case 7: return "Auto Pilot ON.";
+                case 8: return "WARNING: JASON power low.";
+                case 9: return "WARNING: Shield is low.";
+                case 10: return "SHOOT THE BARRELS infobox";
+                case 12: return "PULSE CANNON infobox";
+                case 13: return "CAVES infobox";
+                case 14: return "JASON SUB infobox";
+
+                case 11: 
+                default: return "invalid";
+            }
+        }
 
         public Map(DatFileEntry entry)
         {
@@ -66,10 +139,10 @@ namespace riptide.Riptide
 
         private void loadPositions()
         {
-            Positions = new int[52];
+            Positions = new int[50];
             int num = 0;
 
-            for (int i = Entry.Data.Length - 104; i < Entry.Data.Length; i += 2)
+            for (int i = Entry.Data.Length - 104; i < Entry.Data.Length - 4; i += 2)
             {
                 int pos = Entry.Data[i] + Entry.Data[i + 1] * 256;
                 if (pos != 0) Positions[num] = pos;

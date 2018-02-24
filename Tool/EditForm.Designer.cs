@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditForm));
             this.saveAndCloseButton = new System.Windows.Forms.Button();
             this.hexPanel = new System.Windows.Forms.Panel();
             this.saveButton = new System.Windows.Forms.Button();
@@ -73,7 +74,9 @@
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.hexPanel);
             this.Controls.Add(this.saveAndCloseButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EditForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Asset data";
             this.ResumeLayout(false);
 

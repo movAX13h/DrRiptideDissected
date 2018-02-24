@@ -63,11 +63,14 @@
             this.zoom1xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGifsButton = new System.Windows.Forms.Button();
             this.saveAllButton = new System.Windows.Forms.Button();
+            this.mapButtonsPanel = new System.Windows.Forms.Panel();
+            this.positionsButton = new System.Windows.Forms.Button();
             this.selectionPanel.SuspendLayout();
             this.frameSelectionPanel.SuspendLayout();
             this.canvasPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.mapButtonsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // startButton
@@ -122,6 +125,7 @@
             // sizeColumn
             // 
             this.sizeColumn.Text = "Size";
+            this.sizeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.sizeColumn.Width = 64;
             // 
             // selectionPanel
@@ -129,7 +133,7 @@
             this.selectionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.selectionPanel.Controls.Add(this.tilesButton);
+            this.selectionPanel.Controls.Add(this.mapButtonsPanel);
             this.selectionPanel.Controls.Add(this.pngButton);
             this.selectionPanel.Controls.Add(this.frameSelectionPanel);
             this.selectionPanel.Controls.Add(this.canvasPanel);
@@ -143,13 +147,12 @@
             // tilesButton
             // 
             this.tilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tilesButton.Location = new System.Drawing.Point(303, 12);
+            this.tilesButton.Location = new System.Drawing.Point(79, 2);
             this.tilesButton.Name = "tilesButton";
             this.tilesButton.Size = new System.Drawing.Size(51, 23);
             this.tilesButton.TabIndex = 4;
             this.tilesButton.Text = "Tiles";
             this.tilesButton.UseVisualStyleBackColor = true;
-            this.tilesButton.Visible = false;
             this.tilesButton.Click += new System.EventHandler(this.tilesButton_Click);
             // 
             // pngButton
@@ -395,6 +398,28 @@
             this.saveAllButton.UseVisualStyleBackColor = true;
             this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
             // 
+            // mapButtonsPanel
+            // 
+            this.mapButtonsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapButtonsPanel.Controls.Add(this.positionsButton);
+            this.mapButtonsPanel.Controls.Add(this.tilesButton);
+            this.mapButtonsPanel.Location = new System.Drawing.Point(247, 10);
+            this.mapButtonsPanel.Name = "mapButtonsPanel";
+            this.mapButtonsPanel.Size = new System.Drawing.Size(130, 27);
+            this.mapButtonsPanel.TabIndex = 6;
+            this.mapButtonsPanel.Visible = false;
+            // 
+            // positionsButton
+            // 
+            this.positionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.positionsButton.Location = new System.Drawing.Point(13, 2);
+            this.positionsButton.Name = "positionsButton";
+            this.positionsButton.Size = new System.Drawing.Size(60, 23);
+            this.positionsButton.TabIndex = 6;
+            this.positionsButton.Text = "Positions";
+            this.positionsButton.UseVisualStyleBackColor = true;
+            this.positionsButton.Click += new System.EventHandler(this.positionsButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,6 +432,7 @@
             this.Controls.Add(this.datFileList);
             this.Controls.Add(this.startButton);
             this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dr.Riptide dissected";
@@ -418,6 +444,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.mapButtonsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -459,6 +486,8 @@
         private System.Windows.Forms.Button tilesButton;
         private System.Windows.Forms.TextBox detailsTextBox;
         private System.Windows.Forms.Button saveAllButton;
+        private System.Windows.Forms.Panel mapButtonsPanel;
+        private System.Windows.Forms.Button positionsButton;
     }
 }
 

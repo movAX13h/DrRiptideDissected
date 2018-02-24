@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Be.Windows.Forms.HexBox, Version=1.6.0.38064, Culture=neutral, PublicKeyToken=e0e5adf0ebc99863, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -51,11 +54,18 @@
   <ItemGroup>
     <Compile Include="Controls\FileListItem.cs" />
     <Compile Include="Controls\ListViewColumnSorter.cs" />
+    <Compile Include="Controls\PositionsListItem.cs" />
     <Compile Include="EditForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PositionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PositionsForm.Designer.cs">
+      <DependentUpon>PositionsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Riptide\DatFileEntry.cs" />
     <Compile Include="Extensions.cs" />
@@ -89,6 +99,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PositionsForm.resx">
+      <DependentUpon>PositionsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -115,6 +128,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

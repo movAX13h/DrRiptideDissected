@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace riptide.Riptide
 {
     public class Game
     {
-        public static string ArchiveFile = "riptide.dat"; // hardcoded in game
-        public static string PcxContainingMainPalette = "P_FRAME.PCX"; // hardcoded in game
+        public static string ArchiveFile = "riptide.dat"; // hardcoded in exe
+        public static string PcxContainingMainPalette = "P_FRAME.PCX"; // hardcoded in exe, loaded first
+
+        public static string SpriteNameById(int id) // hardcoded in exe
+        {
+            return "";
+        }
 
         public bool Ready = false;
         public string Error { get; private set; } = "";

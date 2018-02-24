@@ -73,7 +73,7 @@
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(663, 17);
+            this.statusLabel.Size = new System.Drawing.Size(892, 17);
             this.statusLabel.Spring = true;
             // 
             // zoomDropDown
@@ -177,7 +177,9 @@
             this.ClientSize = new System.Drawing.Size(973, 372);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TilesForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tile set";
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).EndInit();
             this.statusStrip1.ResumeLayout(false);
