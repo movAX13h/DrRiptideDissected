@@ -19,7 +19,7 @@ namespace riptide.Riptide
 
         public int PlayerSpawn = 0;
 
-        #region hardcoded strings
+        #region strings hardcoded in exe
         public static string PositionEntryTypeByNumber(int nr, int value)
         {
             switch(nr)

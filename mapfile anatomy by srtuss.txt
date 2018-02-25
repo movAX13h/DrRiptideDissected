@@ -1,0 +1,193 @@
+
+   Riptide levefile anatomy                                                         srtuss
+-----------------------------------------------------------------------------------------------
+
+FILE LAYOUT:
+
+    byte [quantity]     name                description
+    -----------------------------------------------------------------------------------------
+    0,1                 wWidth              word: number of cells in the horizontal direction
+
+    1,2                 wHeight             word: number of cells in the vertical direction
+
+    [vHeight*wWidth*4]  tile-map            
+                                            for each cell:
+                                                byte 0,1    word: wBitmapIndex
+                                                byte 2      entityId    (doors, buttons, barrels)
+                                                byte 3      entityId    (enemies, items, fans)
+
+                                            NOTE:   the game (presumably) uses wBitmapIndex for
+                                                    determining which tiles are none-passable (walls)
+                                                    for entities and the player.
+                                                    wBitmapIndex < 256      -> solid wall
+                                                    wBitmapIndex >= 256     -> passable/background tile
+                                                    this system seems to work fine for all levels.
+
+    [512*64]            tile-bitmaps        512 tile bitmaps. 64 bytes per bitmap. indexing into the
+                                            VGA palette.
+
+                                            NOTE:   the 512 bitmaps appear to have been created,
+                                                    arranged in a grid of 40x13 tiles. this layout
+                                                    gives best visual interconnectivity between
+                                                    adjacent tiles.
+
+
+    [256*3]             VGA palette         VGA "Mode 13h" palette with 256 colors.
+                                            entry 0 is the alphakey.
+
+                                            NOTE:   keep in mind that Mode 13h uses 6-bit per
+                                                    RGB channel. scaling to 8-bit per channel might
+                                                    be necessary when using them.
+
+
+    [50*2]             POINTS table        (see "POINTS" below)
+
+    [4]                 PALETTE CYCLE    (see "PALETTE CYCLE" below)
+
+    {END}
+    -----------------------------------------------------------------------------------------
+
+    
+POINTS table:
+
+    tile-number-positioning:
+    0: top left corner
+    EVEN: facing right
+    ODD: facing left
+
+
+    word    type
+    -------------------------------------------------------------
+    0       player spawn
+    1       exit point
+    2       message "You need a key for this door."
+    3       green-key gate
+    4       exit point (the binary suggests there's "secret exits")
+    5       ? (always 00 00)
+    6       ? (always 00 00)
+    7       ? (always 00 00)
+    8       ? (always 00 00)
+    9       ? (always 00 00)
+    10      teleport1 IN
+    11      teleport1 OUT
+    12      teleport2 IN
+    13      teleport2 OUT
+    14      teleport3 IN
+    15      teleport3 OUT
+    16      teleport4 IN
+    17      teleport4 OUT
+    18      teleport5 IN
+    19      teleport5 OUT
+    20      teleport6 IN
+    21      teleport6 OUT
+    22      teleport7 IN
+    23      teleport7 OUT
+    24      teleport8 IN
+    25      teleport8 OUT
+    26      ? (always 00 00)
+    27      ? (always 00 00)
+    28      ? (always 00 00)
+    29      ? (always 00 00)
+    30      message1 position
+    31      message1 content (see table below)
+    32      message2 position
+    33      message2 content (see table below)
+    34      message3 position
+    35      message3 content (see table below)
+    36      message4 position
+    37      message4 content (see table below)
+
+    38      ? (always 00 00)
+     ....
+    49      ? (always 00 00)
+
+
+
+message-content table:
+
+    no.     type        text
+    -------------------------------------------------------------
+    0       message     "You need a key for this door."
+    1       message     "You got the key!"
+    2       message     "Think!"
+    3       message     "Extra fire power added!"
+    4       message     "Auto-fire added!"
+    5       message     "WARNING: Air is low."
+    6       message     "Watch out for those piranas!"
+    7       message     "Auto Pilot ON."
+    8       message     "WARNING: JASON power low."
+    9       message     "WARNING: Shield is low."
+    10      infobox     displays the "SHOOT THE BARRELS" infobox
+    11        -CRASHES THE GAME-
+    12      infobox     displays the PULSE CANNON infobox
+    13      infobox     displays the CAVES infobox
+    14      infobox     displays the JASON SUB infobox
+    >=15      -CRASHES THE GAME-
+
+
+
+PALETTE CYCLE:
+
+    byte    description
+    -------------------------------------------------------------
+    0       palette index START
+    1       palette index END
+    2       animation period (speed)
+                0 every frame
+                1 every 2nd frame
+                2 every 3rd frame
+                ...
+    3       ? (unknown, no effect i can determine)
+
+    example:
+        zigzag lines for moving bubbles effect, on 1-1.M:
+
+        B7     O    < topmost bubble
+        B6    O
+        B5   O
+        B4  O
+        B3   O
+        B2    O
+        B1     O
+        B0    O
+        B7   O
+         ...
+
+        palette index START = B0
+        palette index END = B7
+        
+    
+    
+GAME LEVELS:
+
+    Each level's title, level-password and musis-file is hardcoded in RIPTIDE.EXE
+    This list that was extracted from the binary:
+
+    file        title                   password    music file
+    -------------------------------------------------------------
+    1-1.m       "Shallow Sea"           1           1.cmf
+    1-2.m       "Micro Menace"          UR2GD       2.cmf
+    1-3.m       "Tulip Tango"           URGR8       3.cmf
+    1-4.m       "Red Tide"              4GOOD       1.cmf
+    1-5.m       "Fathoms of Teeth"      2MUCH4U     2.cmf
+    1-6.m       "Think Tank"            ACE         3.cmf
+    bs1.m       "Oscar's Lair"          BS1         5.cmf
+    2-1.m       "Atlantis"              DNUNDR      oxygen.cmf
+    2-2.m       "Aqua Tremendom"        OUT2GTU     4.cmf
+    2-3.m       "Spawning Waters"       AIC         bossa.cmf
+    2-4.m       "JASON Quest"           HANG10      1.cmf
+    2-5.m       "Frantic Attack"        RUN4IT      weerd.cmf
+    bs2.m       "Enter Otis"            BS2         chaos.cmf
+    3-1.m       "Sea Escape"            GETIT       1.cmf
+    3-2.m       "Deep Enigma"           URINDE      oxygen.cmf
+    3-3.m       "Sink or Swim"          SOS         4.cmf
+    3-4.m       "Marathon"              RUN2ME      3.cmf
+    3-5.m       "Lab Rynth"             512TR       chaos.cmf
+    3-6.m       "Abyss of Peril"        2B4UDY      turn.cmf
+    3-7.m       "Halls of Hell"         HOH         2.cmf
+    3-8.m       "Mysterious Maze"       RIP         oxygen.cmf
+    bs3.m       "Confrontation"         BS3         5.cmf
+    sec1.m      "Outpost Enigma"        SEC1        4.cmf
+    sec2.m      "??????"                SEC2        weerd.cmf
+        
+        

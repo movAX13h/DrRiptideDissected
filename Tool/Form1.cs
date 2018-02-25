@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -29,6 +30,9 @@ namespace riptide
             statusDetailsLabel.Text = "";
             datFileList.ListViewItemSorter = new ListViewColumnSorter();
             game = new Game();
+
+            if (File.Exists(Game.ArchiveFile)) start();
+            else MessageBox.Show($"Archive file '{Game.ArchiveFile}' not found. Please make sure it is available (can be from any version of the game) and restart the application.", "DAT file not found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
         }
 
         private void showFileDetails(DatFileEntry entry)
@@ -130,7 +134,6 @@ namespace riptide
                     datFileList.Items.Add(new FileListItem(entry));
                 }
 
-                startButton.Enabled = false;
                 statusLabel.Text = $"Loaded {game.Archive.Files.Count} items";
                 statusDetailsLabel.Text = "Select an item to show details.";
                 saveGifsButton.Enabled = game.Archive.Files.Count > 0;
@@ -316,11 +319,7 @@ namespace riptide
             statusDetailsLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
         }
 
-        private void startButton_Click(object sender, EventArgs e)
-        {
-            start();
-        }
-        
+                
         #region dat files list
         private void datFileList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -391,16 +390,19 @@ namespace riptide
 
         private void saveAllButton_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists("unpacked")) Directory.CreateDirectory("unpacked");
+            string outDir = "unpacked";
+            if (!Directory.Exists(outDir)) Directory.CreateDirectory(outDir);
             int num = 0;
 
             foreach (DatFileEntry file in game.Archive.Files)
             {
-                File.WriteAllBytes("unpacked/" + file.Filename, file.Data);
+                File.WriteAllBytes(outDir + "/" + file.Filename, file.Data);
                 num++;
             }
 
             MessageBox.Show($"{num} files written.", "archive unpacked", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            Process.Start(Path.GetFullPath(outDir));
         }
 
         private void gifButton_Click(object sender, EventArgs e)
@@ -421,7 +423,9 @@ namespace riptide
 
         private void saveGifsButton_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists("exports")) Directory.CreateDirectory("exports");
+            string outDir = "exports";
+
+            if (!Directory.Exists(outDir)) Directory.CreateDirectory(outDir);
             int num = 0;
             int failed = 0;
 
@@ -437,7 +441,7 @@ namespace riptide
                         continue;
                     }
 
-                    if (!sprite.SaveAsGif("exports/" + Path.GetFileNameWithoutExtension(file.Filename) + ".gif"))
+                    if (!sprite.SaveAsGif(outDir + "/" + Path.GetFileNameWithoutExtension(file.Filename) + ".gif"))
                     {
                         MessageBox.Show($"Failed to make GIF for '{file.Filename}': " + sprite.Error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         failed++;
@@ -448,6 +452,8 @@ namespace riptide
             }
 
             MessageBox.Show($"{num} GIFs written.\n{failed} failed.", "GIF export", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            Process.Start(Path.GetFullPath(outDir));
         }
 
         private void tilesButton_Click(object sender, EventArgs e)
@@ -471,6 +477,13 @@ namespace riptide
         {
             PositionsForm form = new PositionsForm(currentMap);
             form.Text = "Positions of map " + currentMap.Entry.Filename;
+            form.Show();
+        }
+
+        private void paletteButton_Click(object sender, EventArgs e)
+        {
+            PaletteForm form = new PaletteForm(currentMap);
+            form.Text = "Palette of map " + currentMap.Entry.Filename;
             form.Show();
         }
     }

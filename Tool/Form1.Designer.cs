@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.startButton = new System.Windows.Forms.Button();
             this.datFileList = new System.Windows.Forms.ListView();
             this.idColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.fileColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.typeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.sizeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.selectionPanel = new System.Windows.Forms.Panel();
+            this.mapButtonsPanel = new System.Windows.Forms.Panel();
+            this.positionsButton = new System.Windows.Forms.Button();
             this.tilesButton = new System.Windows.Forms.Button();
             this.pngButton = new System.Windows.Forms.Button();
             this.frameSelectionPanel = new System.Windows.Forms.Panel();
@@ -63,25 +64,14 @@
             this.zoom1xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGifsButton = new System.Windows.Forms.Button();
             this.saveAllButton = new System.Windows.Forms.Button();
-            this.mapButtonsPanel = new System.Windows.Forms.Panel();
-            this.positionsButton = new System.Windows.Forms.Button();
+            this.paletteButton = new System.Windows.Forms.Button();
             this.selectionPanel.SuspendLayout();
+            this.mapButtonsPanel.SuspendLayout();
             this.frameSelectionPanel.SuspendLayout();
             this.canvasPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
-            this.mapButtonsPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // startButton
-            // 
-            this.startButton.Location = new System.Drawing.Point(12, 12);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(157, 37);
-            this.startButton.TabIndex = 0;
-            this.startButton.Text = "LOAD GAME";
-            this.startButton.UseVisualStyleBackColor = true;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
             // datFileList
             // 
@@ -95,10 +85,10 @@
             this.datFileList.FullRowSelect = true;
             this.datFileList.GridLines = true;
             this.datFileList.HideSelection = false;
-            this.datFileList.Location = new System.Drawing.Point(12, 55);
+            this.datFileList.Location = new System.Drawing.Point(12, 12);
             this.datFileList.MultiSelect = false;
             this.datFileList.Name = "datFileList";
-            this.datFileList.Size = new System.Drawing.Size(334, 427);
+            this.datFileList.Size = new System.Drawing.Size(334, 437);
             this.datFileList.TabIndex = 2;
             this.datFileList.UseCompatibleStateImageBehavior = false;
             this.datFileList.View = System.Windows.Forms.View.Details;
@@ -144,10 +134,34 @@
             this.selectionPanel.Size = new System.Drawing.Size(631, 470);
             this.selectionPanel.TabIndex = 3;
             // 
+            // mapButtonsPanel
+            // 
+            this.mapButtonsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapButtonsPanel.BackColor = System.Drawing.Color.Transparent;
+            this.mapButtonsPanel.Controls.Add(this.paletteButton);
+            this.mapButtonsPanel.Controls.Add(this.positionsButton);
+            this.mapButtonsPanel.Controls.Add(this.tilesButton);
+            this.mapButtonsPanel.Location = new System.Drawing.Point(145, 10);
+            this.mapButtonsPanel.Name = "mapButtonsPanel";
+            this.mapButtonsPanel.Size = new System.Drawing.Size(232, 27);
+            this.mapButtonsPanel.TabIndex = 6;
+            this.mapButtonsPanel.Visible = false;
+            // 
+            // positionsButton
+            // 
+            this.positionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.positionsButton.Location = new System.Drawing.Point(115, 2);
+            this.positionsButton.Name = "positionsButton";
+            this.positionsButton.Size = new System.Drawing.Size(60, 23);
+            this.positionsButton.TabIndex = 6;
+            this.positionsButton.Text = "Positions";
+            this.positionsButton.UseVisualStyleBackColor = true;
+            this.positionsButton.Click += new System.EventHandler(this.positionsButton_Click);
+            // 
             // tilesButton
             // 
             this.tilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tilesButton.Location = new System.Drawing.Point(79, 2);
+            this.tilesButton.Location = new System.Drawing.Point(181, 2);
             this.tilesButton.Name = "tilesButton";
             this.tilesButton.Size = new System.Drawing.Size(51, 23);
             this.tilesButton.TabIndex = 4;
@@ -378,47 +392,38 @@
             // 
             // saveGifsButton
             // 
+            this.saveGifsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.saveGifsButton.Enabled = false;
-            this.saveGifsButton.Location = new System.Drawing.Point(263, 12);
+            this.saveGifsButton.Location = new System.Drawing.Point(157, 455);
             this.saveGifsButton.Name = "saveGifsButton";
-            this.saveGifsButton.Size = new System.Drawing.Size(83, 37);
+            this.saveGifsButton.Size = new System.Drawing.Size(189, 27);
             this.saveGifsButton.TabIndex = 5;
-            this.saveGifsButton.Text = "SAVE GIFS";
+            this.saveGifsButton.Text = "SAVE SPRITES AS GIF";
             this.saveGifsButton.UseVisualStyleBackColor = true;
             this.saveGifsButton.Click += new System.EventHandler(this.saveGifsButton_Click);
             // 
             // saveAllButton
             // 
+            this.saveAllButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.saveAllButton.Enabled = false;
-            this.saveAllButton.Location = new System.Drawing.Point(175, 12);
+            this.saveAllButton.Location = new System.Drawing.Point(12, 455);
             this.saveAllButton.Name = "saveAllButton";
-            this.saveAllButton.Size = new System.Drawing.Size(83, 37);
+            this.saveAllButton.Size = new System.Drawing.Size(139, 27);
             this.saveAllButton.TabIndex = 6;
             this.saveAllButton.Text = "SAVE ALL";
             this.saveAllButton.UseVisualStyleBackColor = true;
             this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
             // 
-            // mapButtonsPanel
+            // paletteButton
             // 
-            this.mapButtonsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapButtonsPanel.Controls.Add(this.positionsButton);
-            this.mapButtonsPanel.Controls.Add(this.tilesButton);
-            this.mapButtonsPanel.Location = new System.Drawing.Point(247, 10);
-            this.mapButtonsPanel.Name = "mapButtonsPanel";
-            this.mapButtonsPanel.Size = new System.Drawing.Size(130, 27);
-            this.mapButtonsPanel.TabIndex = 6;
-            this.mapButtonsPanel.Visible = false;
-            // 
-            // positionsButton
-            // 
-            this.positionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.positionsButton.Location = new System.Drawing.Point(13, 2);
-            this.positionsButton.Name = "positionsButton";
-            this.positionsButton.Size = new System.Drawing.Size(60, 23);
-            this.positionsButton.TabIndex = 6;
-            this.positionsButton.Text = "Positions";
-            this.positionsButton.UseVisualStyleBackColor = true;
-            this.positionsButton.Click += new System.EventHandler(this.positionsButton_Click);
+            this.paletteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.paletteButton.Location = new System.Drawing.Point(49, 2);
+            this.paletteButton.Name = "paletteButton";
+            this.paletteButton.Size = new System.Drawing.Size(60, 23);
+            this.paletteButton.TabIndex = 7;
+            this.paletteButton.Text = "Palette";
+            this.paletteButton.UseVisualStyleBackColor = true;
+            this.paletteButton.Click += new System.EventHandler(this.paletteButton_Click);
             // 
             // Form1
             // 
@@ -430,7 +435,6 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.selectionPanel);
             this.Controls.Add(this.datFileList);
-            this.Controls.Add(this.startButton);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -438,21 +442,19 @@
             this.Text = "Dr.Riptide dissected";
             this.selectionPanel.ResumeLayout(false);
             this.selectionPanel.PerformLayout();
+            this.mapButtonsPanel.ResumeLayout(false);
             this.frameSelectionPanel.ResumeLayout(false);
             this.canvasPanel.ResumeLayout(false);
             this.canvasPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.mapButtonsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.ListView datFileList;
         private System.Windows.Forms.ColumnHeader fileColumn;
         private System.Windows.Forms.ColumnHeader sizeColumn;
@@ -488,6 +490,7 @@
         private System.Windows.Forms.Button saveAllButton;
         private System.Windows.Forms.Panel mapButtonsPanel;
         private System.Windows.Forms.Button positionsButton;
+        private System.Windows.Forms.Button paletteButton;
     }
 }
 
