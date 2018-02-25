@@ -138,6 +138,8 @@ namespace riptide
                 statusDetailsLabel.Text = "Select an item to show details.";
                 saveGifsButton.Enabled = game.Archive.Files.Count > 0;
                 saveAllButton.Enabled = saveGifsButton.Enabled;
+
+                if (datFileList.Items.Count > 0) datFileList.Items[0].Selected = true;
             }
             else
             {
