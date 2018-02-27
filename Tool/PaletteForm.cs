@@ -18,7 +18,7 @@ namespace riptide
         private SolidBrush brush;
         private int cellSize;
 
-        private List<Color> loop;
+        private int frame = 0;
 
         public PaletteForm(Map map)
         {
@@ -28,28 +28,30 @@ namespace riptide
 
             font = new Font(SystemFonts.DefaultFont.FontFamily, 8, FontStyle.Regular);
 
-            // the last 4 bytes of map data are palette rotation information
-            int start = map.Entry.Data.Length - 4;
-            rotationLabel.Text = "[ROTATION] START: " + map.Entry.Data[start].ToString() + 
-                ", END: " + map.Entry.Data[start + 1].ToString() + 
-                ", SPEED: " + map.Entry.Data[start + 2].ToString() + 
-                ", UNKNOWN: " + map.Entry.Data[start + 3].ToString();
+            /*
+            rotationLabel.Text = "[ROTATION] START: " + map.PaletteRotation.Start.ToString() + 
+                ", END: " + map.PaletteRotation.End.ToString() + 
+                ", SPEED: " + map.PaletteRotation.Speed.ToString() + 
+                ", UNKNOWN: " + map.PaletteRotation.Unknown.ToString();
+            */
+
+            infoLabel.Text = "unknown: " + map.PaletteRotation.Unknown;
 
             startTicks = DateTime.Now.Ticks;
 
             // setup timer for palette rotation
-            if (map.Entry.Data[start] > 0)
+            if (map.PaletteRotation.Start > 0)
             {
                 timer = new Timer();
-                timer.Interval = 100;
+                timer.Interval = 33 * (map.PaletteRotation.Speed + 1);
                 timer.Tick += Timer_Tick;
                 timer.Start();
             }
-            else timeLabel.Text = "";
+            //else timeLabel.Text = "";
 
             cellSize = 20;
             brush = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
-            canvas = new Bitmap(320, 320);
+            canvas = new Bitmap(160, 640);
             draw();
         }
 
@@ -60,8 +62,8 @@ namespace riptide
             int i = 0;
             foreach (Color col in map.Palette)
             {
-                int x = cellSize * (i % 16);
-                int y = cellSize * (i / 16);
+                int x = cellSize * (i % 8);
+                int y = cellSize * (i / 8);
 
                 brush.Color = col;
                 gfx.FillRectangle(brush, x, y, cellSize, cellSize);
@@ -76,23 +78,17 @@ namespace riptide
 
         private void drawPaletteRotation(float time)
         {
-            int offset = map.Entry.Data.Length - 4;
-
-            int start = map.Entry.Data[offset];
-            int end = map.Entry.Data[offset + 1];
-            int length = end - start;
-            int speed = map.Entry.Data[offset + 2];
-            int frame = (int)Math.Floor(time / (0.0333333f * (speed + 1f))) % length;
-
-            timeLabel.Text = "Frame: " + frame.ToString();
+            // frame at current time and palette rotation speed (skips actually)
+            //int frame = (int)Math.Round(time / (0.0333333f * (map.PaletteRotation.Speed + 1f))) % map.PaletteRotation.Length;
+            //timeLabel.Text = "Frame: " + frame.ToString();
 
             Graphics gfx = Graphics.FromImage(canvas);
             int i = 0;
-            for (int cell = start; cell < end; cell++)
+            for (int cell = map.PaletteRotation.Start; cell < map.PaletteRotation.End; cell++)
             {
-                int x = cellSize * (cell % 16);
-                int y = cellSize * (cell / 16);
-                int col = start + (frame + i) % length;
+                int x = cellSize * (cell % 8);
+                int y = cellSize * (cell / 8);
+                int col = map.PaletteRotation.Start + (frame + i) % map.PaletteRotation.Length;
                 brush.Color = map.Palette[col];
                 gfx.FillRectangle(brush, x, y, cellSize, cellSize);
                 if (indicesCheckBox.Checked) drawText(gfx, col.ToString(), x, y);
@@ -101,6 +97,8 @@ namespace riptide
 
             canvasBox.Image = canvas;
             gfx.Dispose();
+
+            frame++;
         }
 
         private void drawText(Graphics gfx, string text, int x, int y)
@@ -108,7 +106,6 @@ namespace riptide
             var textSize = gfx.MeasureString(text, font);
             gfx.DrawString(text, font, Brushes.Black, x + 10 - textSize.Width / 2, y + 4);
             gfx.DrawString(text, font, Brushes.White, x + 10 - textSize.Width / 2 - 1, y + 4 - 1);
-
         }
 
         private void Timer_Tick(object sender, EventArgs e)

@@ -181,6 +181,7 @@
             this.Name = "TilesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tile set";
+            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

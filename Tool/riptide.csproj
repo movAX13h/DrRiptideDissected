@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Controls\FileListItem.cs" />
     <Compile Include="Controls\ListViewColumnSorter.cs" />
+    <Compile Include="Controls\SpriteListItem.cs" />
     <Compile Include="Controls\PositionsListItem.cs" />
     <Compile Include="EditForm.cs">
       <SubType>Form</SubType>
@@ -67,11 +68,17 @@
     <Compile Include="PaletteForm.Designer.cs">
       <DependentUpon>PaletteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PositionsForm.cs">
+    <Compile Include="SpritesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PositionsForm.Designer.cs">
-      <DependentUpon>PositionsForm.cs</DependentUpon>
+    <Compile Include="SpritesForm.Designer.cs">
+      <DependentUpon>SpritesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TriggersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TriggersForm.Designer.cs">
+      <DependentUpon>TriggersForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Riptide\DatFileEntry.cs" />
     <Compile Include="Extensions.cs" />
@@ -87,6 +94,7 @@
     <Compile Include="Riptide\Game.cs" />
     <Compile Include="Riptide\Map.cs" />
     <Compile Include="Riptide\MapCell.cs" />
+    <Compile Include="Riptide\PaletteRotation.cs" />
     <Compile Include="Riptide\PcxFile.cs" />
     <Compile Include="Riptide\Sprite.cs" />
     <Compile Include="Riptide\MapTile.cs" />
@@ -108,8 +116,11 @@
     <EmbeddedResource Include="PaletteForm.resx">
       <DependentUpon>PaletteForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PositionsForm.resx">
-      <DependentUpon>PositionsForm.cs</DependentUpon>
+    <EmbeddedResource Include="SpritesForm.resx">
+      <DependentUpon>SpritesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TriggersForm.resx">
+      <DependentUpon>TriggersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

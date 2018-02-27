@@ -19,7 +19,11 @@ namespace riptide
         private int currentSpriteFrame = 0;
         private int currentZoom = 3;
 
-        private TilesForm tilesForm;
+        private int scrollPosX = 0;
+        private int scrollPosY = 0;
+        private int dragLastX;
+        private int dragLastY;
+        private bool dragging = false;
 
         public Form1()
         {
@@ -27,7 +31,7 @@ namespace riptide
 
             mapButtonsPanel.Left = pngButton.Right - mapButtonsPanel.Width;
             statusLabel.Text = "";
-            statusDetailsLabel.Text = "";
+            detailsStatusLabel.Text = "";
             datFileList.ListViewItemSorter = new ListViewColumnSorter();
             game = new Game();
 
@@ -38,7 +42,8 @@ namespace riptide
         private void showFileDetails(DatFileEntry entry)
         {
             selectionLabel.Text = "";
-            statusDetailsLabel.Text = "";
+            detailsStatusLabel.Text = "";
+            cursorStatusLabel.Text = "";
             currentBitmap = null;
             currentSprite = null;
             currentMap = null;
@@ -70,7 +75,7 @@ namespace riptide
 
                     currentBitmap = currentSprite.Frames[0];
 
-                    statusDetailsLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
+                    detailsStatusLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
                     
                     if (currentSprite.Frames.Length > 1)
                     {
@@ -88,7 +93,7 @@ namespace riptide
                     {
                         PcxFile pcx = entry.GetPicture();
                         currentBitmap = pcx.Bitmap;
-                        statusDetailsLabel.Text = $"Image size: {currentBitmap.Width}x{currentBitmap.Height}";
+                        detailsStatusLabel.Text = $"Image size: {currentBitmap.Width}x{currentBitmap.Height}";
                         pngButton.Visible = true;
                         canvasPanel.Visible = true;
                     }
@@ -106,9 +111,9 @@ namespace riptide
                         return;
                     }
 
-                    Map.MapInfo info = Map.InfoByFilename(currentMap.Entry.Filename);
+                    Game.MapInfo info = Game.InfoByFilename(currentMap.Entry.Filename);
                     selectionLabel.Text += $" - \"{info.Title}\"";
-                    statusDetailsLabel.Text = $"Size: {currentMap.Width}x{currentMap.Height}, Password: \"{info.Password}\", Music: {info.Music}";
+                    detailsStatusLabel.Text = $"Size: {currentMap.Width}x{currentMap.Height}, Password: \"{info.Password}\", Music: {info.Music}";
 
                     mapButtonsPanel.Visible = true;
                     canvasPanel.Visible = true;
@@ -134,8 +139,8 @@ namespace riptide
                     datFileList.Items.Add(new FileListItem(entry));
                 }
 
-                statusLabel.Text = $"Loaded {game.Archive.Files.Count} items";
-                statusDetailsLabel.Text = "Select an item to show details.";
+                statusLabel.Text = $"[{game.Archive.Files.Count} items] double-click to open in hex editor";
+                detailsStatusLabel.Text = "Select an item to show details.";
                 saveGifsButton.Enabled = game.Archive.Files.Count > 0;
                 saveAllButton.Enabled = saveGifsButton.Enabled;
 
@@ -209,7 +214,7 @@ namespace riptide
                             gfx.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 255, 0)), new Rectangle(gx, gy, cellSize, cellSize));
                         }
 
-                        if (cell.SolidEntityID > 0)
+                        if (cell.ShootableID > 0)
                         {
                             //gfx.DrawImage(currentMap.Tiles[cell.SolidEntityID].Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
                             gfx.FillPie(new SolidBrush(Color.FromArgb(150, 255, 105, 180)), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
@@ -231,27 +236,27 @@ namespace riptide
 
                         if (cell.EntityID > 0)
                         {
-                            gfx.DrawString(cell.EntityID.ToString(), font, Brushes.White, gx, gy);
+                            gfx.DrawString("entity: " + cell.EntityID.ToString(), font, Brushes.White, gx, gy);
                         }
 
-                        if (cell.SolidEntityID > 0)
+                        if (cell.ShootableID > 0)
                         {
-                            gfx.DrawString(cell.SolidEntityID.ToString(), font, Brushes.White, gx, gy);
+                            gfx.DrawString("shootable: " + cell.ShootableID.ToString(), font, Brushes.White, gx, gy);
                         }
                     }
                 }
 
                 // positions
-                for (i = 0; i < currentMap.Positions.Length; i++)
+                for (i = 0; i < currentMap.Triggers.Length; i++)
                 {
-                    int pos = currentMap.Positions[i];
+                    int pos = currentMap.Triggers[i];
                     if (pos == 0) continue;
 
-                    string caption = Map.PositionEntryTypeByNumber(i, pos);
+                    string caption = Game.TriggerEntryTypeByNumber(i, pos);
                     if (i >= 30) 
                     {
                         if (i % 2 == 1) continue; // don't draw message entries containing text id instead of position (see Map.PositionEntryTypeByNumber)
-                        caption = Map.PositionEntryTypeByNumber(i + 1, currentMap.Positions[i + 1]);
+                        caption = Game.TriggerEntryTypeByNumber(i + 1, currentMap.Triggers[i + 1]);
                     }
 
                     gx = cellSize * (pos % currentMap.Width);
@@ -266,7 +271,7 @@ namespace riptide
                     // connect teleports with a line
                     if (i >= 10 && i < 30 && i % 2 == 1)
                     {
-                        int prevPos = currentMap.Positions[i - 1];
+                        int prevPos = currentMap.Triggers[i - 1];
                         int halfSize = cellSize / 2;
                         gfx.DrawLine(Pens.Yellow, cellSize * (prevPos % currentMap.Width) + halfSize, cellSize * (prevPos / currentMap.Width) + halfSize, gx + halfSize, gy + halfSize);
                     }
@@ -277,13 +282,13 @@ namespace riptide
 
                 for (x = 0; x <= currentMap.Width; x++)
                 {
-                    gx = x * cellSize + 1;
+                    gx = x * cellSize;
                     gfx.DrawLine(gridPen, gx, 0, gx, h);
                 }
 
                 for (y = 0; y <= currentMap.Height; y++)
                 {
-                    gy = y * cellSize + 1;
+                    gy = y * cellSize;
                     gfx.DrawLine(gridPen, 0, gy, w, gy);
                 }
             }
@@ -304,7 +309,7 @@ namespace riptide
             draw();
 
             frameLabel.Text = (currentSpriteFrame + 1) + "/" + currentSprite.Frames.Length;
-            statusDetailsLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
+            detailsStatusLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
         }
         
         private void nextFrame()
@@ -318,7 +323,7 @@ namespace riptide
             draw();
 
             frameLabel.Text = (currentSpriteFrame + 1) + "/" + currentSprite.Frames.Length;
-            statusDetailsLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
+            detailsStatusLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
         }
 
                 
@@ -462,8 +467,8 @@ namespace riptide
         {
             if (currentMap == null) return;
 
-            tilesForm = new TilesForm(currentMap);
-            tilesForm.Show(this);
+            TilesForm tilesForm = new TilesForm(currentMap);
+            tilesForm.Show();
         }
 
         private void datFileList_DoubleClick(object sender, EventArgs e)
@@ -477,16 +482,85 @@ namespace riptide
 
         private void positionsButton_Click(object sender, EventArgs e)
         {
-            PositionsForm form = new PositionsForm(currentMap);
-            form.Text = "Positions of map " + currentMap.Entry.Filename;
+            TriggersForm form = new TriggersForm(currentMap);
+            form.Text = "Triggers/Positions/Texts " + currentMap.Entry.Filename;
             form.Show();
         }
 
         private void paletteButton_Click(object sender, EventArgs e)
         {
             PaletteForm form = new PaletteForm(currentMap);
-            form.Text = "Palette of map " + currentMap.Entry.Filename;
+            form.Text = "Palette " + currentMap.Entry.Filename;
             form.Show();
         }
+
+        private void spritesButton_Click(object sender, EventArgs e)
+        {
+            SpritesForm form = new SpritesForm(currentMap, game);
+            form.Text = "Entities " + currentMap.Entry.Filename;
+            form.Show();
+        }
+
+        #region mouse dragging map
+        private void canvasBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point global = canvasBox.PointToScreen(e.Location);
+            dragLastX = global.X;
+            dragLastY = global.Y;
+
+            scrollPosX = -canvasPanel.AutoScrollPosition.X;
+            scrollPosY = -canvasPanel.AutoScrollPosition.Y;
+
+            dragging = true;
+        }
+
+        private void canvasBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (currentMap == null) return;
+
+            Point global = canvasBox.PointToScreen(e.Location);
+
+            if (dragging)
+            {
+                canvasBox.Cursor = Cursors.SizeAll;
+
+                int dx = global.X - dragLastX;
+                int dy = global.Y - dragLastY;
+                scrollPosX -= dx;
+                scrollPosY -= dy;
+
+                Point p = canvasPanel.AutoScrollPosition;
+                p.X = scrollPosX;
+                p.Y = scrollPosY;
+                canvasPanel.AutoScrollPosition = p;
+            }
+
+            dragLastX = global.X;
+            dragLastY = global.Y;
+
+            int gx = e.Location.X / (currentZoom * 8);
+            int gy = e.Location.Y / (currentZoom * 8);
+
+            int id = gx + gy * currentMap.Width;
+            if (id < currentMap.Cells.Length)
+            {
+                MapCell cell = currentMap.Cells[id];
+
+                string text = "tile " + cell.TileID.ToString();
+                if (cell.EntityID > 0) text += " entity " + cell.EntityID;
+                if (cell.ShootableID > 0) text += " solid " + cell.ShootableID;
+
+                cursorStatusLabel.Text = $"{text} @ {gx}/{gy}";
+            }
+        }
+
+        private void canvasBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+            canvasBox.Cursor = Cursors.Default;
+        }
+        #endregion
+
+
     }
 }

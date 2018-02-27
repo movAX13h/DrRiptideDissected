@@ -1,6 +1,6 @@
 ﻿namespace riptide
 {
-    partial class PositionsForm
+    partial class TriggersForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PositionsForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TriggersForm));
             this.positionsList = new System.Windows.Forms.ListView();
             this.numberColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.xColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -47,6 +47,7 @@
             this.yColumn,
             this.typeColumn});
             this.positionsList.FullRowSelect = true;
+            this.positionsList.GridLines = true;
             this.positionsList.Location = new System.Drawing.Point(12, 12);
             this.positionsList.Name = "positionsList";
             this.positionsList.Size = new System.Drawing.Size(425, 271);
@@ -74,16 +75,20 @@
             this.typeColumn.Text = "Type";
             this.typeColumn.Width = 282;
             // 
-            // PositionsForm
+            // TriggersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(449, 295);
             this.Controls.Add(this.positionsList);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "PositionsForm";
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "TriggersForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Positions";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

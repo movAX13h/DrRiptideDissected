@@ -41,6 +41,36 @@ namespace riptide.Riptide
             Ready = true;
         }
 
+        public Bitmap MakeIcon(int width, int height)
+        {
+            Bitmap bmp = new Bitmap(width, height);
+            Graphics gfx = Graphics.FromImage(bmp);
+
+            Bitmap src = Frames[0];
+
+            int w = src.Width;
+            int h = src.Height;
+
+            if (w > width)
+            {
+                w = width;
+                h = w * src.Height / src.Width;
+            }
+            
+            if (h > height)
+            {
+                h = height;
+                w = h * src.Height / src.Width;
+            }
+
+            int x = (width - w) / 2;
+            int y = (height - h) / 2;
+
+            gfx.DrawImage(src, new Rectangle(x, y, w, h), new Rectangle(0, 0, src.Width, src.Height), GraphicsUnit.Pixel);
+            gfx.Dispose();
+            return bmp;
+        }
+
         public bool SaveAsGif(string path)
         {
             Error = "";

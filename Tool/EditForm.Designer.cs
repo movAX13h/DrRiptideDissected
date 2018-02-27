@@ -78,6 +78,7 @@
             this.Name = "EditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Asset data";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }

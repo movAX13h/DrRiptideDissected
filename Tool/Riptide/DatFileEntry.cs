@@ -65,7 +65,7 @@ namespace riptide.Riptide
 
         public Sprite GetSprite(Color[] palette, bool forceNew = false)
         {
-            if (cachedSprite != null && !forceNew) return cachedSprite;
+            //if (cachedSprite != null && !forceNew) return cachedSprite;
 
             if (Data == null || Data.Length == 0) return null;
             if (Type != DataType.Sprite) return null;
