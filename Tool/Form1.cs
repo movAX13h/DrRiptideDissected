@@ -211,13 +211,15 @@ namespace riptide
 
                         if (cell.EntityID > 0)
                         {
-                            gfx.FillRectangle(new SolidBrush(Color.FromArgb(150, 0, 255, 0)), new Rectangle(gx, gy, cellSize, cellSize));
+                            Color col = Game.EntitySpriteName(cell.EntityID).Length == 0 ? Color.Red : Color.FromArgb(150, 0, 255, 0);
+                            gfx.FillRectangle(new SolidBrush(col), new Rectangle(gx, gy, cellSize, cellSize));
                         }
 
                         if (cell.ShootableID > 0)
                         {
                             //gfx.DrawImage(currentMap.Tiles[cell.SolidEntityID].Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
-                            gfx.FillPie(new SolidBrush(Color.FromArgb(150, 255, 105, 180)), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
+                            Color col = Game.ShootableSpriteName(cell.ShootableID).Length == 0 ? Color.Red : Color.FromArgb(150, 255, 105, 180);
+                            gfx.FillPie(new SolidBrush(col), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
                         }
                     }
                 } 
@@ -236,12 +238,16 @@ namespace riptide
 
                         if (cell.EntityID > 0)
                         {
-                            gfx.DrawString("entity: " + cell.EntityID.ToString(), font, Brushes.White, gx, gy);
+                            string info = Game.EntitySpriteName(cell.EntityID);
+                            if (info.Length == 0) info = cell.EntityID.ToString();
+                            gfx.DrawString("entity: " + info, font, Brushes.White, gx, gy);
                         }
 
                         if (cell.ShootableID > 0)
                         {
-                            gfx.DrawString("shootable: " + cell.ShootableID.ToString(), font, Brushes.White, gx, gy);
+                            string info = Game.ShootableSpriteName(cell.ShootableID);
+                            if (info.Length == 0) info = cell.ShootableID.ToString();
+                            gfx.DrawString("shootable: " + info, font, Brushes.White, gx, gy);
                         }
                     }
                 }
@@ -547,8 +553,23 @@ namespace riptide
                 MapCell cell = currentMap.Cells[id];
 
                 string text = "tile " + cell.TileID.ToString();
-                if (cell.EntityID > 0) text += " entity " + cell.EntityID;
-                if (cell.ShootableID > 0) text += " solid " + cell.ShootableID;
+
+                if (cell.EntityID > 0)
+                {
+                    text += " entity " + cell.EntityID;
+                    string info = Game.EntitySpriteName(cell.EntityID);
+                    if (info.Length > 0) text += " - " + info;
+                    info = Game.EntityInfo(cell.EntityID);
+                    if (info.Length > 0) text += " - " + info;
+                }
+                if (cell.ShootableID > 0)
+                {
+                    text += " shootable " + cell.ShootableID;
+                    string info = Game.ShootableSpriteName(cell.ShootableID);
+                    if (info.Length > 0) text += " - " + info;
+                    info = Game.ShootableInfo(cell.ShootableID);
+                    if (info.Length > 0) text += " - " + info;
+                }
 
                 cursorStatusLabel.Text = $"{text} @ {gx}/{gy}";
             }

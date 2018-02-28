@@ -14,14 +14,32 @@ namespace riptide.Riptide
             switch(id)
             {
                 case 1: return "DOOR.L";
+                case 2: return "DOOR.L";
                 case 4: return "COIN.L";
+                
                 case 8: return "MINE.L";
+                case 12: return "ZAP_UD.L";
                 case 16: return "POD1.L";
                 case 20: return "FISH1R.L"; // or FISH2R.L
                 case 24: return "WEED1.L";
+                case 28: return "TULIPL.L";
+                case 32: return "CHEST.L";
+                case 36: return "PIRANAL.L";
                 case 40: return "GEM.L";
+                case 44: return "DUCT_R.L";
+                case 48: return "DUCT_D.L";
+                case 52: return "BLOCK.L";
+                case 56: return "FACE_R.L";
                 case 60: return "SERP_R.L";
+                case 64: return "CRAB.L";
                 case 68: return "PIECE_1.L";
+                case 72: return "JELLY.L";
+                case 76: return "SHARKL.L";
+                case 80: return "BONUS1.L";
+                case 84: return "TENT_IN.L";
+                case 88: return "SPIKES_U.L";
+                case 112: return "FACE_L.L";
+                
             }
 
             return "";
@@ -31,8 +49,15 @@ namespace riptide.Riptide
         {
             switch (id)
             {
+                case 1: return "door 1";
+                case 2: return "door 2";
                 case 20: return "can be: FISH1R.L, FISH2R.L";
-                case 68: return "Piece 1 of upgrade";
+                case 28: return "spitting tulip";
+                case 32: return "chest spawning many coins";
+                case 44: return "pushing player subs right";
+                case 48: return "pushing player subs down";
+                case 68: return "piece 1 of upgrade";
+                case 84: return "tentacle in hole";
             }
 
             return "";
@@ -42,12 +67,18 @@ namespace riptide.Riptide
         {
             switch (id)
             {
+                case 1: return "BARREL2.L";
                 case 2: return "BARREL2.L";
                 case 3: return "BARREL2.L";
+                case 5: return "BARREL2.L";
                 case 6: return "BARREL2.L";
+                case 7: return "BARREL2.L";
+                case 8: return "BARREL2.L";
+                case 9: return "BARREL2.L";
                 case 16: return "BARREL1.L";
                 case 32: return "BARREL1.L";
                 case 64: return "SWITCH.L";
+                case 128: return "SWITCH.L";
             }
 
             return "";
@@ -57,12 +88,18 @@ namespace riptide.Riptide
         {
             switch (id)
             {
+                case 1: return "red barrel spawning extra air";
                 case 2: return "red barrel spawning extra shield";
                 case 3: return "red barrel spawning extra fire power item";
+                case 5: return "red barrel spawning extra 1-up item";
                 case 6: return "red barrel spawning green key";
+                case 7: return "red barrel spawning auto-fire";
+                case 8: return "red barrel spawning Jason sub";
+                case 9: return "red barrel spawning Jason sub";
                 case 16: return "random color barrel spawning a coin";
                 case 32: return "blue barrel spawning POD1.L";
-                case 64: return "switches a door";
+                case 64: return "switches door 1";
+                case 128: return "switches door 2";
             }
 
             return "";

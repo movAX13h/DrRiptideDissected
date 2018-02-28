@@ -38,7 +38,9 @@
             this.mapButtonsPanel = new System.Windows.Forms.Panel();
             this.paletteButton = new System.Windows.Forms.Button();
             this.positionsButton = new System.Windows.Forms.Button();
+            this.spritesButton = new System.Windows.Forms.Button();
             this.tilesButton = new System.Windows.Forms.Button();
+            this.selectionLabel = new System.Windows.Forms.TextBox();
             this.pngButton = new System.Windows.Forms.Button();
             this.frameSelectionPanel = new System.Windows.Forms.Panel();
             this.gifButton = new System.Windows.Forms.Button();
@@ -51,6 +53,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.detailsStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cursorStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.zoomDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.zoom10xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoom9xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,9 +67,6 @@
             this.zoom1xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGifsButton = new System.Windows.Forms.Button();
             this.saveAllButton = new System.Windows.Forms.Button();
-            this.spritesButton = new System.Windows.Forms.Button();
-            this.cursorStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.selectionLabel = new System.Windows.Forms.TextBox();
             this.selectionPanel.SuspendLayout();
             this.mapButtonsPanel.SuspendLayout();
             this.frameSelectionPanel.SuspendLayout();
@@ -172,6 +172,17 @@
             this.positionsButton.UseVisualStyleBackColor = true;
             this.positionsButton.Click += new System.EventHandler(this.positionsButton_Click);
             // 
+            // spritesButton
+            // 
+            this.spritesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.spritesButton.Location = new System.Drawing.Point(58, 2);
+            this.spritesButton.Name = "spritesButton";
+            this.spritesButton.Size = new System.Drawing.Size(61, 23);
+            this.spritesButton.TabIndex = 4;
+            this.spritesButton.Text = "Entities";
+            this.spritesButton.UseVisualStyleBackColor = true;
+            this.spritesButton.Click += new System.EventHandler(this.spritesButton_Click);
+            // 
             // tilesButton
             // 
             this.tilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -182,6 +193,16 @@
             this.tilesButton.Text = "Tiles";
             this.tilesButton.UseVisualStyleBackColor = true;
             this.tilesButton.Click += new System.EventHandler(this.tilesButton_Click);
+            // 
+            // selectionLabel
+            // 
+            this.selectionLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.selectionLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectionLabel.Location = new System.Drawing.Point(7, 9);
+            this.selectionLabel.Name = "selectionLabel";
+            this.selectionLabel.ReadOnly = true;
+            this.selectionLabel.Size = new System.Drawing.Size(307, 16);
+            this.selectionLabel.TabIndex = 7;
             // 
             // pngButton
             // 
@@ -305,7 +326,7 @@
             this.statusLabel.AutoSize = false;
             this.statusLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(370, 17);
+            this.statusLabel.Size = new System.Drawing.Size(320, 17);
             this.statusLabel.Text = "loading...";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -313,9 +334,16 @@
             // 
             this.detailsStatusLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.detailsStatusLabel.Name = "detailsStatusLabel";
-            this.detailsStatusLabel.Size = new System.Drawing.Size(290, 17);
-            this.detailsStatusLabel.Spring = true;
+            this.detailsStatusLabel.Size = new System.Drawing.Size(86, 17);
             this.detailsStatusLabel.Text = "no data loaded";
+            // 
+            // cursorStatusLabel
+            // 
+            this.cursorStatusLabel.AutoSize = false;
+            this.cursorStatusLabel.Name = "cursorStatusLabel";
+            this.cursorStatusLabel.Size = new System.Drawing.Size(423, 17);
+            this.cursorStatusLabel.Spring = true;
+            this.cursorStatusLabel.Text = "0/0";
             // 
             // zoomDropDown
             // 
@@ -342,61 +370,61 @@
             // zoom10xToolStripMenuItem
             // 
             this.zoom10xToolStripMenuItem.Name = "zoom10xToolStripMenuItem";
-            this.zoom10xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom10xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom10xToolStripMenuItem.Text = "Zoom 10x";
             // 
             // zoom9xToolStripMenuItem
             // 
             this.zoom9xToolStripMenuItem.Name = "zoom9xToolStripMenuItem";
-            this.zoom9xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom9xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom9xToolStripMenuItem.Text = "Zoom 9x";
             // 
             // zoom8xToolStripMenuItem
             // 
             this.zoom8xToolStripMenuItem.Name = "zoom8xToolStripMenuItem";
-            this.zoom8xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom8xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom8xToolStripMenuItem.Text = "Zoom 8x";
             // 
             // zoom7xToolStripMenuItem
             // 
             this.zoom7xToolStripMenuItem.Name = "zoom7xToolStripMenuItem";
-            this.zoom7xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom7xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom7xToolStripMenuItem.Text = "Zoom 7x";
             // 
             // zoom6xToolStripMenuItem
             // 
             this.zoom6xToolStripMenuItem.Name = "zoom6xToolStripMenuItem";
-            this.zoom6xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom6xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom6xToolStripMenuItem.Text = "Zoom 6x";
             // 
             // zoom5xToolStripMenuItem
             // 
             this.zoom5xToolStripMenuItem.Name = "zoom5xToolStripMenuItem";
-            this.zoom5xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom5xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom5xToolStripMenuItem.Text = "Zoom 5x";
             // 
             // zoom4xToolStripMenuItem
             // 
             this.zoom4xToolStripMenuItem.Name = "zoom4xToolStripMenuItem";
-            this.zoom4xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom4xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom4xToolStripMenuItem.Text = "Zoom 4x";
             // 
             // zoom3xToolStripMenuItem
             // 
             this.zoom3xToolStripMenuItem.Name = "zoom3xToolStripMenuItem";
-            this.zoom3xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom3xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom3xToolStripMenuItem.Text = "Zoom 3x";
             // 
             // zoom2xToolStripMenuItem
             // 
             this.zoom2xToolStripMenuItem.Name = "zoom2xToolStripMenuItem";
-            this.zoom2xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom2xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom2xToolStripMenuItem.Text = "Zoom 2x";
             // 
             // zoom1xToolStripMenuItem
             // 
             this.zoom1xToolStripMenuItem.Name = "zoom1xToolStripMenuItem";
-            this.zoom1xToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoom1xToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.zoom1xToolStripMenuItem.Text = "Zoom 1x";
             // 
             // saveGifsButton
@@ -422,34 +450,6 @@
             this.saveAllButton.Text = "SAVE ALL";
             this.saveAllButton.UseVisualStyleBackColor = true;
             this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
-            // 
-            // spritesButton
-            // 
-            this.spritesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.spritesButton.Location = new System.Drawing.Point(58, 2);
-            this.spritesButton.Name = "spritesButton";
-            this.spritesButton.Size = new System.Drawing.Size(61, 23);
-            this.spritesButton.TabIndex = 4;
-            this.spritesButton.Text = "Entities";
-            this.spritesButton.UseVisualStyleBackColor = true;
-            this.spritesButton.Click += new System.EventHandler(this.spritesButton_Click);
-            // 
-            // cursorStatusLabel
-            // 
-            this.cursorStatusLabel.AutoSize = false;
-            this.cursorStatusLabel.Name = "cursorStatusLabel";
-            this.cursorStatusLabel.Size = new System.Drawing.Size(200, 17);
-            this.cursorStatusLabel.Text = "0/0";
-            // 
-            // selectionLabel
-            // 
-            this.selectionLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.selectionLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectionLabel.Location = new System.Drawing.Point(7, 9);
-            this.selectionLabel.Name = "selectionLabel";
-            this.selectionLabel.ReadOnly = true;
-            this.selectionLabel.Size = new System.Drawing.Size(307, 16);
-            this.selectionLabel.TabIndex = 7;
             // 
             // Form1
             // 
