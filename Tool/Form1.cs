@@ -483,6 +483,7 @@ namespace riptide
             if (currentMap == null) return;
 
             TilesForm tilesForm = new TilesForm(currentMap);
+            tilesForm.Text = "Tiles " + currentMap.Entry.Filename;
             tilesForm.Show();
         }
 
@@ -490,7 +491,9 @@ namespace riptide
         {
             if (datFileList.SelectedItems.Count > 0)
             {
-                EditForm form = new EditForm(game, ((FileListItem)datFileList.SelectedItems[0]).Entry);
+                var entry = ((FileListItem)datFileList.SelectedItems[0]).Entry;
+                EditForm form = new EditForm(game, entry);
+                form.Text = entry.Filename;
                 form.Show();
             }
         }

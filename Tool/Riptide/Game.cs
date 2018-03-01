@@ -63,7 +63,7 @@ namespace riptide.Riptide
                 case 32: return "chest spawning many coins";
                 case 44: return "pushing player subs " + (evenPos ? "right" : "left");
                 case 48: return "pushing player subs " + (evenPos ? "up" : "down");
-                case 68: return "piece pulse cannon";
+                case 68: return "piece of pulse cannon";
                 case 84: return "tentacle in hole";
                 case 100: return "shooting rockets";
                 case 104: return "spawning a gem";
@@ -265,7 +265,7 @@ namespace riptide.Riptide
             DatFileEntry framePcx = Archive.GetByName(PcxContainingMainPalette);
             if (framePcx == null)
             {
-                Error = $"Unable to find '{PcxContainingMainPalette}' which contains the main game color palette";
+                Error = $"Unable to find '{PcxContainingMainPalette}'";
                 return false;
             }
             
