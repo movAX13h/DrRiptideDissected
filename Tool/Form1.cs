@@ -145,6 +145,15 @@ namespace riptide
                 saveAllButton.Enabled = saveGifsButton.Enabled;
 
                 if (datFileList.Items.Count > 0) datFileList.Items[0].Selected = true;
+
+                /*ListViewColumnSorter sorter = datFileList.ListViewItemSorter as ListViewColumnSorter;
+                sorter.SortColumn = 1;
+                sorter.Order = SortOrder.Ascending;
+                datFileList.Sort();
+
+                sorter.SortColumn = 2;
+                sorter.Order = SortOrder.Ascending;
+                datFileList.Sort();*/
             }
             else
             {
@@ -211,14 +220,14 @@ namespace riptide
 
                         if (cell.EntityID > 0)
                         {
-                            Color col = Game.EntitySpriteName(cell.EntityID).Length == 0 ? Color.Red : Color.FromArgb(150, 0, 255, 0);
+                            Color col = Game.EntitySpriteName(cell.EntityID, x % 2 == 0).Length == 0 ? Color.Red : Color.FromArgb(150, 0, 255, 0);
                             gfx.FillRectangle(new SolidBrush(col), new Rectangle(gx, gy, cellSize, cellSize));
                         }
 
                         if (cell.ShootableID > 0)
                         {
                             //gfx.DrawImage(currentMap.Tiles[cell.SolidEntityID].Bitmap, new Rectangle(gx, gy, cellSize, cellSize), new Rectangle(0, 0, 8, 8), GraphicsUnit.Pixel);
-                            Color col = Game.ShootableSpriteName(cell.ShootableID).Length == 0 ? Color.Red : Color.FromArgb(150, 255, 105, 180);
+                            Color col = Game.ShootableSpriteName(cell.ShootableID, x % 2 == 0).Length == 0 ? Color.Red : Color.FromArgb(150, 255, 105, 180);
                             gfx.FillPie(new SolidBrush(col), new Rectangle(gx, gy, cellSize, cellSize), 0, 360);
                         }
                     }
@@ -238,14 +247,14 @@ namespace riptide
 
                         if (cell.EntityID > 0)
                         {
-                            string info = Game.EntitySpriteName(cell.EntityID);
+                            string info = Game.EntitySpriteName(cell.EntityID, x % 2 == 0);
                             if (info.Length == 0) info = cell.EntityID.ToString();
                             gfx.DrawString("entity: " + info, font, Brushes.White, gx, gy);
                         }
 
                         if (cell.ShootableID > 0)
                         {
-                            string info = Game.ShootableSpriteName(cell.ShootableID);
+                            string info = Game.ShootableSpriteName(cell.ShootableID, gx % 2 == 0);
                             if (info.Length == 0) info = cell.ShootableID.ToString();
                             gfx.DrawString("shootable: " + info, font, Brushes.White, gx, gy);
                         }
@@ -557,17 +566,17 @@ namespace riptide
                 if (cell.EntityID > 0)
                 {
                     text += " entity " + cell.EntityID;
-                    string info = Game.EntitySpriteName(cell.EntityID);
+                    string info = Game.EntitySpriteName(cell.EntityID, gx % 2 == 0);
                     if (info.Length > 0) text += " - " + info;
-                    info = Game.EntityInfo(cell.EntityID);
+                    info = Game.EntityInfo(cell.EntityID, gx % 2 == 0);
                     if (info.Length > 0) text += " - " + info;
                 }
                 if (cell.ShootableID > 0)
                 {
                     text += " shootable " + cell.ShootableID;
-                    string info = Game.ShootableSpriteName(cell.ShootableID);
+                    string info = Game.ShootableSpriteName(cell.ShootableID, gx % 2 == 0);
                     if (info.Length > 0) text += " - " + info;
-                    info = Game.ShootableInfo(cell.ShootableID);
+                    info = Game.ShootableInfo(cell.ShootableID, gx % 2 == 0);
                     if (info.Length > 0) text += " - " + info;
                 }
 

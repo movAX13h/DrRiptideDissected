@@ -60,7 +60,7 @@ namespace riptide.Riptide
             if (h > height)
             {
                 h = height;
-                w = h * src.Height / src.Width;
+                w = h * src.Width / src.Height;
             }
 
             int x = (width - w) / 2;

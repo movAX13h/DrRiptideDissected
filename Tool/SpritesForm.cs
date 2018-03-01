@@ -22,7 +22,7 @@ namespace riptide
                     int y = i / map.Width;
                     ListViewItem item = spritesList.Items.Add(new SpriteListItem(cell, x, y));
 
-                    string spriteName = cell.EntityID > 0 ? Game.EntitySpriteName(cell.EntityID) : Game.ShootableSpriteName(cell.ShootableID);
+                    string spriteName = cell.EntityID > 0 ? Game.EntitySpriteName(cell.EntityID, x % 2 == 0) : Game.ShootableSpriteName(cell.ShootableID, x % 2 == 0);
                     if (spriteName != "")
                     {
                         imageList.Images.Add(game.Archive.GetByName(spriteName).GetSprite(game.MainPalette).MakeIcon(32, 32));

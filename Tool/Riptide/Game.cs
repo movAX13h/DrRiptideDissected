@@ -9,24 +9,25 @@ namespace riptide.Riptide
         public static string ArchiveFile = "riptide.dat"; // hardcoded in exe
         public static string PcxContainingMainPalette = "P_FRAME.PCX"; // hardcoded in exe, loaded first
 
-        public static string EntitySpriteName(int id) // hardcoded in exe
+        public static string EntitySpriteName(int id, bool evenPos) // hardcoded in exe
         {
             switch(id)
             {
                 case 1: return "DOOR.L";
                 case 2: return "DOOR.L";
+                case 3: return "DOOR.L";
                 case 4: return "COIN.L";
                 
                 case 8: return "MINE.L";
                 case 12: return "ZAP_UD.L";
-                case 16: return "POD1.L";
-                case 20: return "FISH1R.L"; // or FISH2R.L
+                case 16: return evenPos ? "POD1.L" : "POD2.L";
+                case 20: return evenPos ? "FISH1R.L" : "FISH2R.L";
                 case 24: return "WEED1.L";
                 case 28: return "TULIPL.L";
                 case 32: return "CHEST.L";
                 case 36: return "PIRANAL.L";
                 case 40: return "GEM.L";
-                case 44: return "DUCT_R.L";
+                case 44: return evenPos ? "DUCT_R.L" : "DUCT_L.L";
                 case 48: return "DUCT_D.L";
                 case 52: return "BLOCK.L";
                 case 56: return "FACE_R.L";
@@ -38,68 +39,82 @@ namespace riptide.Riptide
                 case 80: return "BONUS1.L";
                 case 84: return "TENT_IN.L";
                 case 88: return "SPIKES_U.L";
+                case 92: return "STATUE.L";
+                case 96: return "FIRE_PIT.L";
+                case 100: return "SHUTL_L.L";
+                case 104: return "CLAM.L";
+                case 108: return "CANNONL.L";
                 case 112: return "FACE_L.L";
+                case 116: return "SHIPL.L";
                 
             }
 
             return "";
         }
 
-        public static string EntityInfo(int id) // functionaliy is part of the game and hardcoded in exe
+        public static string EntityInfo(int id, bool evenPos) // functionaliy is part of the game and hardcoded in exe
         {
             switch (id)
             {
                 case 1: return "door 1";
                 case 2: return "door 2";
-                case 20: return "can be: FISH1R.L, FISH2R.L";
+                case 3: return "door 3";
                 case 28: return "spitting tulip";
                 case 32: return "chest spawning many coins";
-                case 44: return "pushing player subs right";
-                case 48: return "pushing player subs down";
+                case 44: return "pushing player subs " + (evenPos ? "right" : "left");
+                case 48: return "pushing player subs " + (evenPos ? "up" : "down");
                 case 68: return "piece 1 of upgrade";
                 case 84: return "tentacle in hole";
+                case 100: return "shooting rockets";
+                case 104: return "spawning a gem";
+                case 108: return "always looking to player side";
+                case 116: return "dropping bombs (SHPBMB.L)";
             }
 
             return "";
         }
 
-        public static string ShootableSpriteName(int id) // hardcoded in exe (not entirely valid in all cases; see ShootableInfo below)
+        public static string ShootableSpriteName(int id, bool evenPos) // hardcoded in exe (not entirely valid in all cases; see ShootableInfo below)
         {
             switch (id)
             {
                 case 1: return "BARREL2.L";
                 case 2: return "BARREL2.L";
                 case 3: return "BARREL2.L";
+                case 4: return "BARREL2.L";
                 case 5: return "BARREL2.L";
                 case 6: return "BARREL2.L";
                 case 7: return "BARREL2.L";
                 case 8: return "BARREL2.L";
                 case 9: return "BARREL2.L";
-                case 16: return "BARREL1.L";
+                case 16: return evenPos ? "BARREL3.L" : "BARREL1.L";
                 case 32: return "BARREL1.L";
                 case 64: return "SWITCH.L";
                 case 128: return "SWITCH.L";
+                case 192: return "SWITCH.L";
             }
 
             return "";
         }
 
-        public static string ShootableInfo(int id) // functionaliy is part of the game and hardcoded in exe
+        public static string ShootableInfo(int id, bool evenPos) // functionaliy is part of the game and hardcoded in exe
         {
             switch (id)
             {
-                case 1: return "red barrel spawning extra air";
-                case 2: return "red barrel spawning extra shield";
-                case 3: return "red barrel spawning extra fire power item";
-                case 5: return "red barrel spawning extra 1-up item";
-                case 6: return "red barrel spawning green key";
-                case 7: return "red barrel spawning auto-fire";
-                case 8: return "red barrel spawning Jason sub";
-                case 9: return "red barrel spawning Jason sub";
-                case 16: return "random color barrel spawning a coin";
-                case 32: return "blue barrel spawning POD1.L";
-                case 64: return "switches door 1";
-                case 128: return "switches door 2";
+                case 1: return "spawning extra air";
+                case 2: return "spawning extra shield";
+                case 3: return "spawning extra fire power item";
+                case 4: return "spawning PU_TOP item (unknown effect)";
+                case 5: return "spawning extra 1-up item";
+                case 6: return "spawning green key";
+                case 7: return "spawning auto-fire";
+                case 8: return "spawning Jason sub";
+                case 9: return "spawning Jason sub";
+                case 16: return "spawning a coin";
+                case 32: return "spawning " + (evenPos ? "POD1.L" : "POD2.L");
+                case 64: return "opens door 1";
+                case 128: return "opens door 2";
+                case 192: return "opens door 3";
             }
 
             return "";

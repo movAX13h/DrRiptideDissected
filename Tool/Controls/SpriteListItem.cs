@@ -40,11 +40,11 @@ namespace riptide.Controls
             yItem.Text = y.ToString();
             typeItem.Text = cell.EntityID > 0 ? "entity" : "shootable";
 
-            string a = cell.EntityID > 0 ? Game.EntitySpriteName(cell.EntityID) : Game.ShootableSpriteName(cell.ShootableID);
+            string a = cell.EntityID > 0 ? Game.EntitySpriteName(cell.EntityID, x % 2 == 0) : Game.ShootableSpriteName(cell.ShootableID, x % 2 == 0);
             assignmentItem.Text = a.Length > 0 ? a : "unknown";
             if (a.Length == 0) assignmentItem.BackColor = Color.Red;
 
-            infoItem.Text = cell.EntityID > 0 ? Game.EntityInfo(cell.EntityID) : Game.ShootableInfo(cell.ShootableID);
+            infoItem.Text = cell.EntityID > 0 ? Game.EntityInfo(cell.EntityID, x % 2 == 0) : Game.ShootableInfo(cell.ShootableID, x % 2 == 0);
         }
 
 
