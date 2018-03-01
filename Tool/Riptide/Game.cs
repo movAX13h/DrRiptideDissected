@@ -63,7 +63,7 @@ namespace riptide.Riptide
                 case 32: return "chest spawning many coins";
                 case 44: return "pushing player subs " + (evenPos ? "right" : "left");
                 case 48: return "pushing player subs " + (evenPos ? "up" : "down");
-                case 68: return "piece 1 of upgrade";
+                case 68: return "piece pulse cannon";
                 case 84: return "tentacle in hole";
                 case 100: return "shooting rockets";
                 case 104: return "spawning a gem";
@@ -74,7 +74,7 @@ namespace riptide.Riptide
             return "";
         }
 
-        public static string ShootableSpriteName(int id, bool evenPos) // hardcoded in exe (not entirely valid in all cases; see ShootableInfo below)
+        public static string ShootableSpriteName(int id, bool evenPos) // hardcoded in exe
         {
             switch (id)
             {
