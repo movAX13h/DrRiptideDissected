@@ -375,6 +375,7 @@ namespace riptide
 
         private void cmfPlayerTimerTick(object sender, EventArgs e)
         {
+            if (musicPlayback == null) return;
             cmfPlayerTimeLabel.Text = formatSeconds((int)musicPlayback.SecPosition) + " / " + formatSeconds((int)musicPlayback.SecTotal);
         }
 
