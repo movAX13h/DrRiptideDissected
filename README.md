@@ -8,6 +8,7 @@ Tool produced during reverse engineering the DOS game *"In Search of Dr.Riptide"
    - maps with entity indicators and special positions (M)
    - images (PCX)
    - texts (TXT)
+   - play game music using Adlib/CMF player by srtuss
  - display map palette inclusive palette rotation
  - display tile set of a map
  - list of all entities of a map
