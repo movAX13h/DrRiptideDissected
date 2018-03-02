@@ -3,12 +3,13 @@ Tool produced during reverse engineering the DOS game *"In Search of Dr.Riptide"
 
 ## Features
  - load game DAT file
- - display assets of DAT file: 
+ - display/play assets of DAT file: 
    - animated sprites (L)
    - maps with entity indicators and special positions (M)
    - images (PCX)
+   - game music using Adlib/CMF player by srtuss (CMF)
+   - sound fx (VOC)
    - texts (TXT)
-   - play game music using Adlib/CMF player by srtuss
  - display map palette inclusive palette rotation
  - display tile set of a map
  - list of all entities of a map
