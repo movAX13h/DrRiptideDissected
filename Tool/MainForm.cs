@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 using riptide.Controls;
 using riptide.Riptide;
+using riptide.Utils;
 
 namespace riptide
 {
@@ -18,6 +19,7 @@ namespace riptide
         private Bitmap currentBitmap = null;
         private Sprite currentSprite = null;
         private Map currentMap = null;
+        private VocFile currentVoc = null;
         private int currentSpriteFrame = 0;
         private int currentZoom = 3;
 
@@ -26,10 +28,12 @@ namespace riptide
         private int dragLastX;
         private int dragLastY;
         private bool dragging = false;
-        private Light[] cmfPlayerLights;
 
+        private Light[] cmfPlayerLights;
         private CmfPlayer.Playback musicPlayback;
         private Timer cmfPlayerTimer;
+
+        
 
         public MainForm()
         {
@@ -64,6 +68,8 @@ namespace riptide
 
             cmfPlayerPanel.Visible = false;
             stopMusicPlayback();
+
+            vocPlayerPanel.Visible = false;
 
             currentSpriteFrame = 0;
 
@@ -135,10 +141,21 @@ namespace riptide
                     {
                         startMusicPlayback(entry.Data);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         MessageBox.Show("Failed to load CMF music: " + e.Message, "Audio failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    break;
+
+                case DatFileEntry.DataType.SoundFX:
+                    currentVoc = new VocFile(entry.Data);
+
+                    int sec = (int)Math.Ceiling(currentVoc.SecDuration);
+                    vocTimeLabel.Text = (sec / 60).ToString("D2") + ":" + (sec % 60).ToString("D2") +
+                        " @ " + currentVoc.samplerate +
+                        " Hz (" + currentVoc.format + ")";
+
+                    vocPlayerPanel.Visible = true;
                     break;
 
                 case DatFileEntry.DataType.Text:
@@ -426,6 +443,14 @@ namespace riptide
         }
         #endregion
 
+        #region sound fx player
+        private void playVoc()
+        {
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(currentVoc.ToWavStream());
+            player.Play();
+        }
+        #endregion
+
         #region dat files list
         private void datFileList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -603,6 +628,11 @@ namespace riptide
             form.Show();
         }
 
+        private void vocPlayButton_Click(object sender, EventArgs e)
+        {
+            playVoc();
+        }
+
         #region mouse dragging map
         private void canvasBox_MouseDown(object sender, MouseEventArgs e)
         {
@@ -684,6 +714,6 @@ namespace riptide
             stopMusicPlayback();
         }
 
-
+        
     }
 }

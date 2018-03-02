@@ -115,6 +115,8 @@
     <Compile Include="Utils\CmfPlayer\Wasapi.cs" />
     <Compile Include="Utils\LZWEncoder.cs" />
     <Compile Include="Utils\NeuQuant.cs" />
+    <Compile Include="Utils\RiffWave.cs" />
+    <Compile Include="Utils\VocFile.cs" />
     <EmbeddedResource Include="EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
