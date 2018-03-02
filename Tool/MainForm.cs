@@ -10,7 +10,7 @@ using riptide.Riptide;
 
 namespace riptide
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private Game game;
         private Bitmap canvas;
@@ -31,7 +31,7 @@ namespace riptide
         private CmfPlayer.Playback musicPlayback;
         private Timer cmfPlayerTimer;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
