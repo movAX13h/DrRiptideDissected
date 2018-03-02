@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+
 using riptide.Controls;
 using riptide.Riptide;
 
@@ -24,12 +26,18 @@ namespace riptide
         private int dragLastX;
         private int dragLastY;
         private bool dragging = false;
+        private Light[] cmfPlayerLights;
+
+        private CmfPlayer.Playback musicPlayback;
+        private Timer cmfPlayerTimer;
 
         public Form1()
         {
             InitializeComponent();
 
+            initCmfPlayer();
             mapButtonsPanel.Left = pngButton.Right - mapButtonsPanel.Width;
+            cmfPlayerPanel.Visible = false;
             statusLabel.Text = "";
             detailsStatusLabel.Text = "";
             datFileList.ListViewItemSorter = new ListViewColumnSorter();
@@ -53,6 +61,9 @@ namespace riptide
             pngButton.Visible = false;
             mapButtonsPanel.Visible = false;
             frameSelectionPanel.Visible = false;
+
+            cmfPlayerPanel.Visible = false;
+            stopMusicPlayback();
 
             currentSpriteFrame = 0;
 
@@ -117,6 +128,17 @@ namespace riptide
 
                     mapButtonsPanel.Visible = true;
                     canvasPanel.Visible = true;
+                    break;
+
+                case DatFileEntry.DataType.Music:
+                    try
+                    {
+                        startMusicPlayback(entry.Data);
+                    }
+                    catch(Exception e)
+                    {
+                        MessageBox.Show("Failed to load CMF music: " + e.Message, "Audio failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     break;
 
                 case DatFileEntry.DataType.Text:
@@ -341,7 +363,68 @@ namespace riptide
             detailsStatusLabel.Text = $"Frame size: {currentBitmap.Width}x{currentBitmap.Height}";
         }
 
-                
+        #region music player
+        private void initCmfPlayer()
+        {
+            cmfPlayerTimer = new Timer();
+            cmfPlayerTimer.Interval = 10;
+            cmfPlayerTimer.Tick += cmfPlayerTimerTick;
+            cmfPlayerLights = new Light[] { light1, light2, light3, light4, light5, light6, light7, light8, light9 };
+            foreach (var light in cmfPlayerLights) cmfPlayerTimer.Tick += light.Tick;
+        }
+
+        private void cmfPlayerTimerTick(object sender, EventArgs e)
+        {
+            cmfPlayerTimeLabel.Text = formatSeconds((int)musicPlayback.SecPosition) + " / " + formatSeconds((int)musicPlayback.SecTotal);
+        }
+
+        static string formatSeconds(int s)
+        {
+            return (s / 60).ToString("D2") + ":" + (s % 60).ToString("D2");
+        }
+
+        private void startMusicPlayback(byte[] data)
+        {
+            CmfPlayer.Cmf cmf = new CmfPlayer.Cmf(data);
+            musicPlayback = new CmfPlayer.Playback(cmf);
+            musicPlayback.ChannelActivity = (time, channel, velocity) =>
+            {
+                cmfPlayerLights[channel].val = Math.Min(velocity + .5f, 1);
+            };
+
+            cmfPlayerTimeLabel.Text = "00:00 / 00:00";
+            cmfPlayerButton.Text = "PLAY";
+            cmfPlayerPanel.Visible = true;
+
+            foreach (var light in cmfPlayerLights) light.Reset();
+        }
+
+        private void stopMusicPlayback()
+        {
+            if (musicPlayback == null) return;
+            
+            musicPlayback.Close();
+            musicPlayback = null;
+        }
+
+        private void cmfPlayerButton_Click(object sender, EventArgs e)
+        {
+            if (musicPlayback.IsPlaying)
+            {
+                musicPlayback.Pause();
+                cmfPlayerTimer.Stop();
+            }
+            else
+            {
+                musicPlayback.Play();
+                cmfPlayerTimer.Start();
+            }
+
+            if (musicPlayback.IsPlaying) cmfPlayerButton.Text = "PAUSE";
+            else cmfPlayerButton.Text = "PLAY";
+        }
+        #endregion
+
         #region dat files list
         private void datFileList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -592,7 +675,13 @@ namespace riptide
             dragging = false;
             canvasBox.Cursor = Cursors.Default;
         }
+
         #endregion
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            stopMusicPlayback();
+        }
 
 
     }

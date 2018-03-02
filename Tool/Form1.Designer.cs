@@ -67,12 +67,25 @@
             this.zoom1xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveGifsButton = new System.Windows.Forms.Button();
             this.saveAllButton = new System.Windows.Forms.Button();
+            this.cmfPlayerPanel = new System.Windows.Forms.Panel();
+            this.cmfPlayerButton = new System.Windows.Forms.Button();
+            this.cmfPlayerTimeLabel = new System.Windows.Forms.Label();
+            this.light9 = new riptide.Controls.Light();
+            this.light8 = new riptide.Controls.Light();
+            this.light7 = new riptide.Controls.Light();
+            this.light6 = new riptide.Controls.Light();
+            this.light5 = new riptide.Controls.Light();
+            this.light4 = new riptide.Controls.Light();
+            this.light3 = new riptide.Controls.Light();
+            this.light2 = new riptide.Controls.Light();
+            this.light1 = new riptide.Controls.Light();
             this.selectionPanel.SuspendLayout();
             this.mapButtonsPanel.SuspendLayout();
             this.frameSelectionPanel.SuspendLayout();
             this.canvasPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.cmfPlayerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // datFileList
@@ -125,6 +138,7 @@
             this.selectionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.selectionPanel.Controls.Add(this.cmfPlayerPanel);
             this.selectionPanel.Controls.Add(this.mapButtonsPanel);
             this.selectionPanel.Controls.Add(this.selectionLabel);
             this.selectionPanel.Controls.Add(this.pngButton);
@@ -341,7 +355,7 @@
             // 
             this.cursorStatusLabel.AutoSize = false;
             this.cursorStatusLabel.Name = "cursorStatusLabel";
-            this.cursorStatusLabel.Size = new System.Drawing.Size(423, 17);
+            this.cursorStatusLabel.Size = new System.Drawing.Size(454, 17);
             this.cursorStatusLabel.Spring = true;
             this.cursorStatusLabel.Text = "0/0";
             // 
@@ -451,6 +465,116 @@
             this.saveAllButton.UseVisualStyleBackColor = true;
             this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
             // 
+            // cmfPlayerPanel
+            // 
+            this.cmfPlayerPanel.Controls.Add(this.cmfPlayerButton);
+            this.cmfPlayerPanel.Controls.Add(this.light9);
+            this.cmfPlayerPanel.Controls.Add(this.light8);
+            this.cmfPlayerPanel.Controls.Add(this.light7);
+            this.cmfPlayerPanel.Controls.Add(this.light6);
+            this.cmfPlayerPanel.Controls.Add(this.light5);
+            this.cmfPlayerPanel.Controls.Add(this.light4);
+            this.cmfPlayerPanel.Controls.Add(this.light3);
+            this.cmfPlayerPanel.Controls.Add(this.light2);
+            this.cmfPlayerPanel.Controls.Add(this.light1);
+            this.cmfPlayerPanel.Controls.Add(this.cmfPlayerTimeLabel);
+            this.cmfPlayerPanel.Location = new System.Drawing.Point(8, 38);
+            this.cmfPlayerPanel.Name = "cmfPlayerPanel";
+            this.cmfPlayerPanel.Size = new System.Drawing.Size(304, 100);
+            this.cmfPlayerPanel.TabIndex = 7;
+            // 
+            // cmfPlayerButton
+            // 
+            this.cmfPlayerButton.Location = new System.Drawing.Point(113, 69);
+            this.cmfPlayerButton.Name = "cmfPlayerButton";
+            this.cmfPlayerButton.Size = new System.Drawing.Size(75, 23);
+            this.cmfPlayerButton.TabIndex = 9;
+            this.cmfPlayerButton.Text = "PLAY";
+            this.cmfPlayerButton.UseVisualStyleBackColor = true;
+            this.cmfPlayerButton.Click += new System.EventHandler(this.cmfPlayerButton_Click);
+            // 
+            // cmfPlayerTimeLabel
+            // 
+            this.cmfPlayerTimeLabel.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmfPlayerTimeLabel.Location = new System.Drawing.Point(23, 15);
+            this.cmfPlayerTimeLabel.Name = "cmfPlayerTimeLabel";
+            this.cmfPlayerTimeLabel.Size = new System.Drawing.Size(255, 23);
+            this.cmfPlayerTimeLabel.TabIndex = 10;
+            this.cmfPlayerTimeLabel.Text = "00:00 / 00:00";
+            this.cmfPlayerTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // light9
+            // 
+            this.light9.Location = new System.Drawing.Point(255, 40);
+            this.light9.Name = "light9";
+            this.light9.Size = new System.Drawing.Size(23, 23);
+            this.light9.TabIndex = 8;
+            this.light9.Text = "light9";
+            // 
+            // light8
+            // 
+            this.light8.Location = new System.Drawing.Point(226, 40);
+            this.light8.Name = "light8";
+            this.light8.Size = new System.Drawing.Size(23, 23);
+            this.light8.TabIndex = 7;
+            this.light8.Text = "light8";
+            // 
+            // light7
+            // 
+            this.light7.Location = new System.Drawing.Point(197, 40);
+            this.light7.Name = "light7";
+            this.light7.Size = new System.Drawing.Size(23, 23);
+            this.light7.TabIndex = 6;
+            this.light7.Text = "light7";
+            // 
+            // light6
+            // 
+            this.light6.Location = new System.Drawing.Point(168, 40);
+            this.light6.Name = "light6";
+            this.light6.Size = new System.Drawing.Size(23, 23);
+            this.light6.TabIndex = 5;
+            this.light6.Text = "light6";
+            // 
+            // light5
+            // 
+            this.light5.Location = new System.Drawing.Point(139, 40);
+            this.light5.Name = "light5";
+            this.light5.Size = new System.Drawing.Size(23, 23);
+            this.light5.TabIndex = 4;
+            this.light5.Text = "light5";
+            // 
+            // light4
+            // 
+            this.light4.Location = new System.Drawing.Point(110, 40);
+            this.light4.Name = "light4";
+            this.light4.Size = new System.Drawing.Size(23, 23);
+            this.light4.TabIndex = 3;
+            this.light4.Text = "light4";
+            // 
+            // light3
+            // 
+            this.light3.Location = new System.Drawing.Point(81, 40);
+            this.light3.Name = "light3";
+            this.light3.Size = new System.Drawing.Size(23, 23);
+            this.light3.TabIndex = 2;
+            this.light3.Text = "light3";
+            // 
+            // light2
+            // 
+            this.light2.Location = new System.Drawing.Point(52, 40);
+            this.light2.Name = "light2";
+            this.light2.Size = new System.Drawing.Size(23, 23);
+            this.light2.TabIndex = 1;
+            this.light2.Text = "light2";
+            // 
+            // light1
+            // 
+            this.light1.Location = new System.Drawing.Point(23, 40);
+            this.light1.Name = "light1";
+            this.light1.Size = new System.Drawing.Size(23, 23);
+            this.light1.TabIndex = 0;
+            this.light1.Text = "light1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -467,6 +591,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dr.Riptide dissected";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.selectionPanel.ResumeLayout(false);
             this.selectionPanel.PerformLayout();
             this.mapButtonsPanel.ResumeLayout(false);
@@ -476,6 +601,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.cmfPlayerPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -520,6 +646,18 @@
         private System.Windows.Forms.Button spritesButton;
         private System.Windows.Forms.ToolStripStatusLabel cursorStatusLabel;
         private System.Windows.Forms.TextBox selectionLabel;
+        private System.Windows.Forms.Panel cmfPlayerPanel;
+        private System.Windows.Forms.Button cmfPlayerButton;
+        private Controls.Light light9;
+        private Controls.Light light8;
+        private Controls.Light light7;
+        private Controls.Light light6;
+        private Controls.Light light5;
+        private Controls.Light light4;
+        private Controls.Light light3;
+        private Controls.Light light2;
+        private Controls.Light light1;
+        private System.Windows.Forms.Label cmfPlayerTimeLabel;
     }
 }
 
