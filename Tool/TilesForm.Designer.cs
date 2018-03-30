@@ -44,6 +44,7 @@
             this.zoom2xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoom1xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pngButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.canvasBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -170,11 +171,23 @@
             this.panel1.Size = new System.Drawing.Size(973, 350);
             this.panel1.TabIndex = 2;
             // 
+            // pngButton
+            // 
+            this.pngButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pngButton.Location = new System.Drawing.Point(0, 351);
+            this.pngButton.Name = "pngButton";
+            this.pngButton.Size = new System.Drawing.Size(40, 21);
+            this.pngButton.TabIndex = 3;
+            this.pngButton.Text = "PNG";
+            this.pngButton.UseVisualStyleBackColor = true;
+            this.pngButton.Click += new System.EventHandler(this.pngButton_Click);
+            // 
             // TilesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(973, 372);
+            this.Controls.Add(this.pngButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -209,5 +222,6 @@
         private System.Windows.Forms.ToolStripMenuItem zoom2xToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoom1xToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button pngButton;
     }
 }
