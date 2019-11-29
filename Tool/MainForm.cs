@@ -512,7 +512,7 @@ namespace riptide
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.DefaultExt = ".png";
             dialog.Filter = "Portable Network Graphic (*.png)|*.png";
-            dialog.FileName = Path.GetFileNameWithoutExtension(currentSprite.Entry.Filename);
+            if (currentSprite != null) dialog.FileName = Path.GetFileNameWithoutExtension(currentSprite.Entry.Filename);
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 currentBitmap.Save(dialog.FileName);
